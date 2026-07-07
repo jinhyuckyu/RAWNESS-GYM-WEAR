@@ -1,0 +1,1296 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RAWNESS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Anton&family=Barlow+Condensed:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#ffffff;
+    --ink:#111111;
+    --muted:#8a8a8a;
+    --line:#ececec;
+    --accent:#a3271f;
+    --surface:#f5f5f5;
+    --ease:cubic-bezier(.22,.61,.36,1);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    font-family:'Noto Sans KR', sans-serif;
+    color:var(--ink);
+    background:var(--bg);
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit; text-decoration:none;}
+  ul{list-style:none;}
+  img{max-width:100%; display:block;}
+  button{font:inherit; cursor:pointer;}
+  .en{font-family:'Barlow Condensed',sans-serif;}
+  :focus-visible{outline:2px solid var(--ink); outline-offset:3px;}
+
+  /* ===== 슬래시 컷 로고 ===== */
+  .wordmark{
+    position:relative; display:inline-block;
+    font-family:'Anton',sans-serif;
+    letter-spacing:.06em; line-height:1;
+    transform:skewX(-3deg);
+    color:var(--ink);
+    user-select:none;
+  }
+  .wordmark::after{
+    content:""; position:absolute; inset:-6% -2%;
+    background:repeating-linear-gradient(
+      112deg,
+      transparent 0 .62em,
+      var(--cut, #fff) .62em .70em,
+      transparent .70em 1.5em
+    );
+    pointer-events:none;
+  }
+
+  /* ===== 슬로건 바 ===== */
+  .slogan{border-bottom:1px solid var(--line);}
+  .slogan-inner{
+    max-width:1360px; margin:0 auto; padding:9px 24px;
+    display:flex; justify-content:space-between; align-items:center; gap:20px;
+  }
+  .slogan a.copy{font-family:'Barlow Condensed',sans-serif; font-size:12px; letter-spacing:.1em; color:var(--muted); transition:color .2s;}
+  .slogan a.copy:hover{color:var(--ink);}
+  .slogan .util{display:flex; gap:14px;}
+  .slogan .util a{font-size:11px; color:var(--muted); transition:color .2s;}
+  .slogan .util a:hover{color:var(--ink);}
+
+  /* ===== 헤더 ===== */
+  .head-wrap{
+    position:sticky; top:0; z-index:50;
+    background:rgba(255,255,255,.96);
+    backdrop-filter:blur(8px);
+    -webkit-backdrop-filter:blur(8px);
+  }
+  header{border-bottom:1px solid var(--line);}
+  .head-inner{
+    max-width:1360px; margin:0 auto; padding:22px 24px;
+    display:grid; grid-template-columns:1fr auto 1fr; align-items:center;
+  }
+  .head-icons{display:flex; gap:18px; font-size:11.5px; letter-spacing:.03em;}
+  .head-icons a{transition:color .2s;}
+  .head-icons a:hover{color:var(--muted);}
+  .head-icons.right{justify-content:flex-end;}
+  .logo{font-size:26px;}
+  .cart-count{
+    display:inline-block; min-width:15px; height:15px; margin-left:2px;
+    background:var(--ink); color:#fff;
+    font-family:'Barlow Condensed',sans-serif; font-size:10px; line-height:15px; text-align:center;
+  }
+
+  nav.cats{border-bottom:1px solid var(--line);}
+  .cats-inner{
+    max-width:1360px; margin:0 auto; padding:0 24px;
+    display:flex; justify-content:center; gap:36px;
+  }
+  .cats-inner a{
+    position:relative; display:inline-block; padding:14px 0;
+    font-family:'Barlow Condensed',sans-serif; font-size:14px; font-weight:500;
+    letter-spacing:.16em; text-transform:uppercase; color:var(--ink);
+  }
+  .cats-inner a::after{
+    content:""; position:absolute; left:0; right:0; bottom:-1px; height:1.5px;
+    background:var(--ink); transform:scaleX(0); transform-origin:left;
+    transition:transform .3s var(--ease);
+  }
+  .cats-inner a:hover::after, .cats-inner a.active::after{transform:scaleX(1);}
+
+  /* ===== 카테고리 배너 ===== */
+  .cat-banner{
+    position:relative; height:300px; background:#0e0e0e;
+    display:flex; align-items:center; justify-content:center; flex-direction:column;
+    overflow:hidden;
+  }
+  .cat-banner .big{
+    position:absolute; left:50%; top:50%; transform:translate(-50%,-50%) skewX(-3deg);
+    font-size:clamp(100px, 14vw, 190px); color:#fff; opacity:.16;
+    --cut:#0e0e0e;
+    white-space:nowrap;
+  }
+  .cat-banner .label{
+    position:relative; font-family:'Barlow Condensed',sans-serif; font-size:12.5px;
+    letter-spacing:.45em; color:rgba(255,255,255,.55); margin-bottom:12px;
+  }
+  .cat-banner h1{
+    position:relative;
+    font-size:50px; color:#fff; --cut:#0e0e0e;
+  }
+  .fade-in{animation:rise .6s var(--ease);}
+  @keyframes rise{from{opacity:0; transform:translateY(14px);} to{opacity:1; transform:none;}}
+  h1.fade-in{animation:riseSkew .6s var(--ease);}
+  @keyframes riseSkew{from{opacity:0; transform:skewX(-3deg) translateY(14px);} to{opacity:1; transform:skewX(-3deg);}}
+
+  /* ===== 카테고리 설명 ===== */
+  .cat-desc{
+    max-width:1360px; margin:0 auto; padding:42px 24px 0; text-align:center;
+  }
+  .cat-desc p{
+    font-size:12.5px; color:var(--muted); line-height:2.1; max-width:520px; margin:0 auto;
+  }
+
+  /* ===== 서브카테고리 필터 ===== */
+  .subcats{
+    max-width:1360px; margin:0 auto; padding:28px 24px 0;
+    display:flex; justify-content:center; flex-wrap:wrap; gap:8px;
+  }
+  .subcats a{
+    font-size:12px; letter-spacing:.02em; color:var(--muted);
+    border:1px solid var(--line); padding:7px 16px;
+    transition:all .2s;
+  }
+  .subcats a span{font-family:'Barlow Condensed',sans-serif; font-size:11.5px; margin-left:3px;}
+  .subcats a:hover{border-color:var(--ink); color:var(--ink);}
+  .subcats a.active{background:var(--ink); border-color:var(--ink); color:#fff;}
+
+  /* ===== 정렬 바 ===== */
+  .sortbar{
+    max-width:1360px; margin:34px auto 0; padding:12px 24px;
+    border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+    display:flex; justify-content:space-between; align-items:center;
+  }
+  .sortbar .sorts{display:flex; gap:16px;}
+  .sortbar a{font-size:11.5px; color:var(--muted); transition:color .2s;}
+  .sortbar a.active{color:var(--ink); font-weight:700;}
+  .sortbar a:hover{color:var(--ink);}
+  .sortbar .filter{
+    font-family:'Barlow Condensed',sans-serif; font-size:12.5px; letter-spacing:.1em;
+    background:none; border:none; color:var(--ink);
+  }
+  .sortbar .filter:hover{color:var(--muted);}
+
+  /* ===== 상품 그리드 ===== */
+  .grid{
+    max-width:1360px; margin:0 auto; padding:36px 24px 80px;
+    display:grid; grid-template-columns:repeat(4,1fr); gap:44px 20px;
+  }
+  .card{opacity:0; transform:translateY(16px); transition:opacity .6s var(--ease), transform .6s var(--ease);}
+  .card.in{opacity:1; transform:none;}
+
+  .card .thumb{
+    position:relative; aspect-ratio:3/4; background:var(--surface);
+    overflow:hidden; display:flex; align-items:center; justify-content:center;
+  }
+  .card .thumb img, .card .thumb svg{transition:transform .5s var(--ease), opacity .35s var(--ease);}
+  .card .thumb img{width:100%; height:100%; object-fit:cover;}
+  .card .thumb svg{width:44%; opacity:.8;}
+  .card:hover .thumb img, .card:hover .thumb svg{transform:scale(1.03);}
+  .thumb .alt{position:absolute; inset:0; opacity:0;}
+  .card:hover .thumb .alt{opacity:1;}
+  .card:hover .thumb .main{opacity:0;}
+
+  .card.soldout .thumb::after{
+    content:"SOLD OUT";
+    position:absolute; inset:0; z-index:3;
+    display:flex; align-items:center; justify-content:center;
+    background:rgba(255,255,255,.55);
+    font-family:'Barlow Condensed',sans-serif; font-size:13px; letter-spacing:.3em; color:var(--ink);
+  }
+  .card.soldout .info{color:var(--muted);}
+
+  .card .info{padding-top:12px;}
+  .card .flag{
+    font-family:'Barlow Condensed',sans-serif; font-size:11.5px; letter-spacing:.2em;
+    text-transform:uppercase; color:var(--muted); margin-bottom:5px;
+  }
+  .card .flag.sale{color:var(--accent);}
+  .card .flag.pre{color:var(--ink);}
+  .card .name{font-size:13px; margin-bottom:5px; line-height:1.5;}
+  .card .price{font-family:'Barlow Condensed',sans-serif; font-size:14.5px; font-weight:500; letter-spacing:.03em;}
+  .card .price .was{color:var(--muted); text-decoration:line-through; font-weight:400; margin-right:7px; font-size:12.5px;}
+  .card .note{font-size:11px; color:var(--muted); margin-top:4px;}
+
+  .empty{
+    grid-column:1/-1; text-align:center; padding:60px 0;
+    font-size:12.5px; color:var(--muted);
+  }
+
+  .pagination{
+    display:flex; justify-content:center; align-items:center; gap:18px;
+    padding-bottom:90px; font-family:'Barlow Condensed',sans-serif; font-size:13px; color:var(--muted);
+  }
+  .pagination a.active{color:var(--ink); font-weight:700; text-decoration:underline; text-underline-offset:4px;}
+  .pagination a:hover{color:var(--ink);}
+
+  /* ===== 상품 상세 ===== */
+  .detail{max-width:1360px; margin:0 auto; padding:34px 24px 80px;}
+  .crumb{
+    display:flex; align-items:center; gap:10px; margin-bottom:28px;
+    font-size:11.5px; color:var(--muted);
+  }
+  .crumb a:hover{color:var(--ink);}
+  .crumb .back{
+    margin-left:auto; font-family:'Barlow Condensed',sans-serif; font-size:12.5px;
+    letter-spacing:.12em; color:var(--ink); background:none; border:none;
+    border-bottom:1px solid var(--ink); padding:0 0 2px;
+  }
+  .crumb .back:hover{color:var(--muted); border-color:var(--muted);}
+
+  .detail-grid{display:grid; grid-template-columns:1.15fr 1fr; gap:56px; align-items:start;}
+
+  .gallery .stage{
+    position:relative; aspect-ratio:3/4; background:var(--surface);
+    display:flex; align-items:center; justify-content:center; overflow:hidden;
+  }
+  .gallery .stage img{width:100%; height:100%; object-fit:cover;}
+  .gallery .stage svg{width:44%; opacity:.8;}
+  .gallery .thumbs{display:flex; gap:8px; margin-top:8px;}
+  .gallery .thumbs button{
+    width:64px; aspect-ratio:3/4; background:var(--surface);
+    border:1px solid transparent; padding:0; overflow:hidden;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .gallery .thumbs button.active{border-color:var(--ink);}
+  .gallery .thumbs img{width:100%; height:100%; object-fit:cover;}
+  .gallery .thumbs svg{width:50%; opacity:.8;}
+
+  .buy{position:sticky; top:120px;}
+  .buy .flag{font-family:'Barlow Condensed',sans-serif; font-size:12px; letter-spacing:.22em; text-transform:uppercase; color:var(--muted); margin-bottom:8px;}
+  .buy .flag.sale{color:var(--accent);}
+  .buy h2{font-size:20px; font-weight:500; line-height:1.5; margin-bottom:10px;}
+  .buy .price{font-family:'Barlow Condensed',sans-serif; font-size:22px; font-weight:600; letter-spacing:.03em;}
+  .buy .price .was{color:var(--muted); text-decoration:line-through; font-weight:400; margin-right:9px; font-size:16px;}
+  .buy .lead{font-size:12.5px; color:var(--muted); line-height:2; margin:18px 0 4px;}
+
+  .opt-group{margin-top:22px;}
+  .opt-group .lab{
+    font-family:'Barlow Condensed',sans-serif; font-size:12px; letter-spacing:.2em;
+    text-transform:uppercase; color:var(--ink); margin-bottom:10px;
+  }
+  .opt-group .lab span{color:var(--muted); text-transform:none; letter-spacing:.02em; font-family:'Noto Sans KR',sans-serif; font-size:11.5px; margin-left:8px;}
+  .opts{display:flex; flex-wrap:wrap; gap:8px;}
+  .opts .swatch{
+    width:26px; height:26px; border:1px solid rgba(17,17,17,.15); padding:0;
+    position:relative;
+  }
+  .opts .swatch.active{outline:1.5px solid var(--ink); outline-offset:2px;}
+  .opts .size{
+    min-width:46px; padding:9px 12px; background:none;
+    border:1px solid var(--line); font-family:'Barlow Condensed',sans-serif;
+    font-size:13px; letter-spacing:.08em; color:var(--ink);
+  }
+  .opts .size:hover{border-color:var(--ink);}
+  .opts .size.active{background:var(--ink); border-color:var(--ink); color:#fff;}
+
+  .qty-row{
+    display:flex; justify-content:space-between; align-items:center;
+    margin-top:26px; padding:14px 0; border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+  }
+  .qty{display:flex; align-items:center; border:1px solid var(--line);}
+  .qty button{width:32px; height:34px; background:none; border:none; font-size:15px; color:var(--muted);}
+  .qty button:hover{color:var(--ink);}
+  .qty output{width:38px; text-align:center; font-family:'Barlow Condensed',sans-serif; font-size:14px;}
+  .total{font-family:'Barlow Condensed',sans-serif; font-size:18px; font-weight:600;}
+  .total small{font-size:11px; color:var(--muted); font-weight:400; font-family:'Noto Sans KR',sans-serif; margin-right:8px;}
+
+  .buy-btns{display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:18px;}
+  .buy-btns button{
+    padding:15px 0; font-family:'Barlow Condensed',sans-serif; font-size:14px;
+    letter-spacing:.18em; text-transform:uppercase; border:1px solid var(--ink);
+    transition:all .2s;
+  }
+  .buy-btns .add{background:none; color:var(--ink);}
+  .buy-btns .add:hover{background:var(--surface);}
+  .buy-btns .now{background:var(--ink); color:#fff;}
+  .buy-btns .now:hover{background:var(--accent); border-color:var(--accent);}
+  .buy-btns button:disabled{
+    background:var(--surface); color:var(--muted); border-color:var(--line); cursor:not-allowed;
+  }
+  .buy .note{font-size:11.5px; color:var(--muted); margin-top:12px;}
+
+  .acc-info{margin-top:30px; border-top:1px solid var(--line);}
+  .acc-info details{border-bottom:1px solid var(--line);}
+  .acc-info summary{
+    list-style:none; cursor:pointer; padding:15px 0;
+    font-family:'Barlow Condensed',sans-serif; font-size:13px; letter-spacing:.2em;
+    text-transform:uppercase; display:flex; justify-content:space-between;
+  }
+  .acc-info summary::-webkit-details-marker{display:none;}
+  .acc-info summary::after{content:"+"; color:var(--muted);}
+  .acc-info details[open] summary::after{content:"–";}
+  .acc-info .body{padding:0 0 18px; font-size:12.5px; color:var(--muted); line-height:2.1;}
+
+  .related{max-width:1360px; margin:0 auto; padding:0 24px 90px;}
+  .related h3{
+    font-family:'Barlow Condensed',sans-serif; font-size:14px; letter-spacing:.3em;
+    text-transform:uppercase; margin-bottom:24px;
+  }
+  .related .rel-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:44px 20px;}
+
+  /* ===== 푸터 ===== */
+  footer{border-top:1px solid var(--line);}
+  .foot-top{
+    max-width:1360px; margin:0 auto; padding:54px 24px;
+    display:grid; grid-template-columns:repeat(3,1fr); gap:40px;
+  }
+  .foot-top h4{
+    font-family:'Barlow Condensed',sans-serif; font-size:13px; letter-spacing:.22em;
+    margin-bottom:16px; color:var(--ink);
+  }
+  .foot-top p, .foot-top li{font-size:12px; color:var(--muted); line-height:2.2;}
+  .foot-top a:hover{color:var(--ink);}
+  .foot-biz{max-width:1360px; margin:0 auto; padding:0 24px 26px;}
+  .foot-biz p{font-size:11px; color:var(--muted); line-height:2;}
+  .foot-bottom{
+    border-top:1px solid var(--line);
+    max-width:1360px; margin:0 auto; padding:22px 24px;
+    display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px;
+  }
+  .foot-bottom p{font-size:11px; color:var(--muted);}
+  .sns{display:flex; gap:14px; flex-wrap:wrap;}
+  .sns a{font-size:11px; letter-spacing:.04em; color:var(--muted); transition:color .2s;}
+  .sns a:hover{color:var(--ink);}
+
+  /* ===== 위시리스트 하트 버튼 ===== */
+  .wish-btn{
+    position:absolute; top:8px; right:8px; z-index:4;
+    width:32px; height:32px; padding:0;
+    display:flex; align-items:center; justify-content:center;
+    background:none; border:none;
+  }
+  .thumb .wish-btn svg{width:17px !important; height:17px; opacity:1 !important; transform:none !important; transition:none;}
+  .wish-btn path{fill:transparent; stroke:var(--ink); stroke-width:1.4; transition:fill .2s, stroke .2s;}
+  .wish-btn:hover path{stroke:var(--accent);}
+  .wish-btn.on path{fill:var(--accent); stroke:var(--accent);}
+  .buy-head{display:flex; justify-content:space-between; align-items:flex-start; gap:12px;}
+  .buy-head .wish-btn{position:static; flex:none; margin-top:2px;}
+  .buy-head .wish-btn svg{width:19px; height:19px;}
+
+  /* ===== 드로어(장바구니/위시리스트) ===== */
+  .scrim{
+    position:fixed; inset:0; z-index:80; background:rgba(17,17,17,.4);
+    opacity:0; pointer-events:none; transition:opacity .3s var(--ease);
+  }
+  .scrim.show{opacity:1; pointer-events:auto;}
+  .drawer{
+    position:fixed; top:0; right:0; bottom:0; z-index:90;
+    width:400px; max-width:92vw; background:#fff;
+    display:flex; flex-direction:column;
+    transform:translateX(100%); transition:transform .35s var(--ease);
+    box-shadow:-12px 0 40px rgba(0,0,0,.08);
+    visibility:hidden;
+  }
+  .drawer.open{transform:none; visibility:visible;}
+  .drawer-head{
+    display:flex; justify-content:space-between; align-items:center;
+    padding:20px 22px; border-bottom:1px solid var(--line);
+  }
+  .drawer-head h3{
+    font-family:'Barlow Condensed',sans-serif; font-size:15px; font-weight:600;
+    letter-spacing:.25em; text-transform:uppercase;
+  }
+  .drawer-head h3 span{color:var(--muted); margin-left:6px;}
+  .drawer-close{background:none; border:none; font-size:20px; line-height:1; color:var(--muted); padding:2px 4px;}
+  .drawer-close:hover{color:var(--ink);}
+  .drawer-body{flex:1; overflow-y:auto; padding:2px 22px;}
+  .d-item{
+    display:grid; grid-template-columns:64px 1fr auto; gap:14px;
+    padding:16px 0; border-bottom:1px solid var(--line);
+  }
+  .d-item .ph{
+    width:64px; aspect-ratio:3/4; background:var(--surface); overflow:hidden;
+    display:flex; align-items:center; justify-content:center; cursor:pointer;
+  }
+  .d-item .ph img{width:100%; height:100%; object-fit:cover;}
+  .d-item .ph svg{width:50%; opacity:.8;}
+  .d-item .nm{font-size:12.5px; line-height:1.5; cursor:pointer;}
+  .d-item .nm:hover{text-decoration:underline; text-underline-offset:3px;}
+  .d-item .opt{font-size:11px; color:var(--muted); margin-top:3px;}
+  .d-item .pr{font-family:'Barlow Condensed',sans-serif; font-size:13.5px; font-weight:500; margin-top:6px;}
+  .d-item .rm{background:none; border:none; color:var(--muted); font-size:15px; line-height:1; align-self:start; padding:0 2px;}
+  .d-item .rm:hover{color:var(--ink);}
+  .d-qty{display:inline-flex; align-items:center; border:1px solid var(--line); margin-top:8px;}
+  .d-qty button{width:24px; height:24px; background:none; border:none; color:var(--muted); font-size:13px;}
+  .d-qty button:hover{color:var(--ink);}
+  .d-qty output{width:28px; text-align:center; font-family:'Barlow Condensed',sans-serif; font-size:12.5px;}
+  .d-empty{padding:70px 0; text-align:center; font-size:12.5px; color:var(--muted);}
+  .drawer-foot{border-top:1px solid var(--line); padding:18px 22px;}
+  .drawer-foot .row{display:flex; justify-content:space-between; font-size:12px; color:var(--muted); margin-bottom:6px;}
+  .drawer-foot .row.total{font-size:14px; color:var(--ink); font-weight:700; margin:10px 0 14px;}
+  .drawer-foot .row.total .en{font-size:16px;}
+  .drawer-foot .checkout{
+    width:100%; padding:14px 0; background:var(--ink); color:#fff;
+    border:1px solid var(--ink); font-family:'Barlow Condensed',sans-serif;
+    font-size:13.5px; letter-spacing:.18em; text-transform:uppercase; transition:all .2s;
+  }
+  .drawer-foot .checkout:hover{background:var(--accent); border-color:var(--accent);}
+  .drawer-foot .free-note{font-size:11px; color:var(--muted); margin-top:10px; text-align:center;}
+
+  /* ===== 검색 레이어 ===== */
+  .search-layer{
+    position:fixed; inset:0; z-index:95; background:rgba(255,255,255,.98);
+    overflow-y:auto; opacity:0; visibility:hidden;
+    transition:opacity .25s var(--ease), visibility .25s;
+  }
+  .search-layer.show{opacity:1; visibility:visible;}
+  .search-inner{
+    max-width:720px; margin:80px auto 0; padding:0 24px 14px;
+    display:flex; gap:16px; align-items:center; border-bottom:2px solid var(--ink);
+  }
+  .search-inner input{
+    flex:1; border:none; outline:none; background:none;
+    font-family:'Barlow Condensed',sans-serif; font-size:24px; letter-spacing:.04em;
+  }
+  .search-inner input::placeholder{color:var(--muted); font-size:18px; font-family:'Noto Sans KR',sans-serif;}
+  .search-results{max-width:720px; margin:6px auto 80px; padding:0 24px;}
+  .s-row{
+    display:grid; grid-template-columns:52px 1fr auto; gap:16px; align-items:center;
+    padding:13px 0; border-bottom:1px solid var(--line); cursor:pointer;
+  }
+  .s-row .ph{
+    width:52px; aspect-ratio:3/4; background:var(--surface); overflow:hidden;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .s-row .ph img{width:100%; height:100%; object-fit:cover;}
+  .s-row .ph svg{width:50%; opacity:.8;}
+  .s-row .nm{font-size:12.5px;}
+  .s-row:hover .nm{text-decoration:underline; text-underline-offset:3px;}
+  .s-row .s-cat{font-family:'Barlow Condensed',sans-serif; font-size:11px; letter-spacing:.15em; color:var(--muted); margin-bottom:3px;}
+  .s-row .pr{font-family:'Barlow Condensed',sans-serif; font-size:13.5px; font-weight:500;}
+  .s-hint{padding:34px 0; text-align:center; font-size:12.5px; color:var(--muted);}
+
+  @media (max-width:980px){
+    .slogan a.copy{display:none;}
+    .slogan-inner{justify-content:flex-end;}
+    .cats-inner{gap:22px; overflow-x:auto; justify-content:flex-start;}
+    .cat-banner{height:220px;}
+    .cat-banner h1{font-size:36px;}
+    .grid{grid-template-columns:repeat(2,1fr); gap:34px 14px;}
+    .detail-grid{grid-template-columns:1fr; gap:30px;}
+    .buy{position:static;}
+    .related .rel-grid{grid-template-columns:repeat(2,1fr); gap:34px 14px;}
+    .foot-top{grid-template-columns:1fr;}
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none !important; transition:none !important;}
+    .card{opacity:1; transform:none;}
+  }
+</style>
+</head>
+<body>
+
+<div class="slogan">
+  <div class="slogan-inner">
+    <a href="#" class="copy">BUILT RAW. NOTHING EXTRA. — FW26 COLLECTION</a>
+    <div class="util">
+      <a href="#">로그인</a>
+      <a href="#">회원가입</a>
+      <a href="#">주문조회</a>
+      <a href="#">고객센터</a>
+    </div>
+  </div>
+</div>
+
+<div class="head-wrap">
+  <header>
+    <div class="head-inner">
+      <div class="head-icons"><a href="#" id="searchBtn">검색</a></div>
+      <a href="#" class="logo wordmark">RAWNESS</a>
+      <div class="head-icons right">
+        <a href="#" id="wishBtn">위시리스트 <span class="cart-count" id="wishCount">0</span></a>
+        <a href="#" id="cartBtn">장바구니 <span class="cart-count" id="cartCount">0</span></a>
+      </div>
+    </div>
+  </header>
+
+  <nav class="cats">
+    <div class="cats-inner" id="catNav">
+      <a href="#outer" data-cat="outer">OUTER</a>
+      <a href="#top" data-cat="top">TOP</a>
+      <a href="#bottom" data-cat="bottom" class="active">BOTTOM</a>
+      <a href="#set" data-cat="set">SET</a>
+      <a href="#acc" data-cat="acc">ACC</a>
+      <a href="#preorder" data-cat="preorder">Pre-order</a>
+      <a href="#archive" data-cat="archive">ARCHIVE</a>
+    </div>
+  </nav>
+</div>
+
+<section class="cat-banner" id="catBanner">
+  <span class="big wordmark" aria-hidden="true">RAWNESS</span>
+  <p class="label" id="bannerLabel"></p>
+  <h1 class="wordmark" id="bannerTitle" style="--cut:#0e0e0e"></h1>
+</section>
+
+<div class="cat-desc">
+  <p id="catDesc"></p>
+</div>
+
+<div class="subcats" id="subcats"></div>
+
+<div class="sortbar">
+  <div class="sorts" id="sorts">
+    <a href="#" data-sort="new" class="active">신상품</a>
+    <a href="#" data-sort="name">상품명</a>
+    <a href="#" data-sort="low">낮은가격</a>
+    <a href="#" data-sort="high">높은가격</a>
+    <a href="#" data-sort="sale">세일</a>
+  </div>
+  <button class="filter">Filter +</button>
+</div>
+
+<div class="grid" id="grid"></div>
+
+<div class="pagination" id="pagination">
+  <a href="#">Prev</a>
+  <a href="#" class="active">1</a>
+  <a href="#">2</a>
+  <a href="#">3</a>
+  <a href="#">Next</a>
+</div>
+
+<section class="detail" id="detail" hidden></section>
+<section class="related" id="related" hidden></section>
+
+<footer>
+  <div class="foot-top">
+    <div>
+      <h4>CONTACT US</h4>
+      <ul>
+        <li><a href="#">1:1 문의</a></li>
+        <li><a href="#">배송조회</a></li>
+        <li><a href="#">주문조회</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>CUSTOMER CENTER</h4>
+      <p>070-0000-0000</p>
+      <p>평일 AM 09:00 - PM 06:00</p>
+      <p>토,일,공휴일 휴무</p>
+    </div>
+    <div>
+      <h4>INFORMATION</h4>
+      <p>00은행 000-000000-00000</p>
+      <p>예금주 : 주식회사 로우니스</p>
+      <ul>
+        <li><a href="#">이용안내</a></li>
+        <li><a href="#">이용약관</a></li>
+        <li><a href="#">개인정보취급방침</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot-biz">
+    <p>주식회사 로우니스 &nbsp;|&nbsp; 대표자 : 홍길동 &nbsp;|&nbsp; 사업자번호 : 000-00-00000 &nbsp;|&nbsp; 통신판매업신고 : 0000-서울-0000<br>
+    주소 : 서울특별시 00구 00로 00 &nbsp;|&nbsp; 관련문의 : contact@rawness.co.kr &nbsp;|&nbsp; 개인정보관리책임자 : 070-0000-0000</p>
+  </div>
+  <div class="foot-bottom">
+    <p class="en">© 2026 RAWNESS. All rights reserved.</p>
+    <div class="sns">
+      <a href="#">Instagram</a>
+      <a href="#">Facebook</a>
+      <a href="#">Blog</a>
+      <a href="#">Kakaotalk</a>
+      <a href="#">Youtube</a>
+      <a href="#">Tiktok</a>
+    </div>
+  </div>
+</footer>
+
+<div class="scrim" id="scrim"></div>
+
+<aside class="drawer" id="cartDrawer" aria-label="장바구니">
+  <div class="drawer-head">
+    <h3>Cart <span id="cartDrawerCount">0</span></h3>
+    <button class="drawer-close" data-close aria-label="닫기">×</button>
+  </div>
+  <div class="drawer-body" id="cartBody"></div>
+  <div class="drawer-foot" id="cartFoot"></div>
+</aside>
+
+<aside class="drawer" id="wishDrawer" aria-label="위시리스트">
+  <div class="drawer-head">
+    <h3>Wishlist <span id="wishDrawerCount">0</span></h3>
+    <button class="drawer-close" data-close aria-label="닫기">×</button>
+  </div>
+  <div class="drawer-body" id="wishBody"></div>
+</aside>
+
+<div class="search-layer" id="searchLayer">
+  <div class="search-inner">
+    <input id="searchInput" type="search" placeholder="상품명을 검색하세요" autocomplete="off">
+    <button class="drawer-close" data-close aria-label="검색 닫기">×</button>
+  </div>
+  <div class="search-results" id="searchResults"></div>
+</div>
+
+<script>
+/* 페이지 내 임시(#) 링크는 이동하지 않도록 전역 차단
+   — 미리보기 환경에서 '외부 링크 열기' 팝업이 뜨는 것을 방지 */
+document.addEventListener('click', (e) => {
+  const a = e.target.closest('a');
+  if (a) {
+    const href = a.getAttribute('href') || '';
+    if (href === '' || href.startsWith('#')) e.preventDefault();
+  }
+});
+
+/* ===== 상품 실루엣 SVG ===== */
+const SHAPES = {
+  tee:    '<path d="M70 26 40 42 26 78l28 12v146h92V90l28-12-14-36-30-16c-8 10-32 10-40 0z" fill="#cfcbc4"/>',
+  hoodie: '<path d="M70 34 40 50 26 86l28 12v138h92V98l28-12-14-36-30-16c-8 10-32 10-40 0z" fill="#cfcbc4"/><path d="M72 34a28 20 0 0 1 56 0c-10 12-46 12-56 0z" fill="#bfbbb2"/>',
+  jacket: '<path d="M70 26 40 42 26 78l28 12v146h44V60h4v176h44V90l28-12-14-36-30-16c-8 10-32 10-40 0z" fill="#cfcbc4"/>',
+  vest:   '<path d="M76 30 52 46 44 80l20 8v148h72V88l20-8-8-34-24-16c-6 8-26 8-40 0z" fill="#cfcbc4"/>',
+  leggings:'<path d="M50 20h100v50l-22 8v172H72V78l-22-8z" fill="#cfcbc4"/>',
+  tights: '<path d="M60 20h80l16 44h-30v172H74V64H44z" fill="#cfcbc4"/>',
+  shorts: '<path d="M55 40h90v36l18 80h-52l-11-44-11 44H37l18-80z" fill="#cfcbc4"/>',
+  pants:  '<path d="M50 20h100v50l-22 8v172H72V78l-22-8z" fill="#cfcbc4"/>',
+  set:    '<path d="M76 20 56 30 47 54l19 8v70h68V62l19-8-9-24-20-10c-5 7-21 7-38 0z" fill="#cfcbc4"/><path d="M66 150h68v26l12 56h-36l-8-32-8 32H54l12-56z" fill="#bfbbb2"/>',
+  cap:    '<path d="M44 148a56 52 0 0 1 112 0v6H44z" fill="#cfcbc4"/><path d="M44 154h134v14H44z" fill="#bfbbb2"/>',
+  bag:    '<rect x="38" y="104" width="124" height="102" fill="#cfcbc4"/><path d="M75 104V86a25 25 0 0 1 50 0v18h-12V86a13 13 0 0 0-26 0v18z" fill="#bfbbb2"/>',
+  strap:  '<rect x="60" y="40" width="26" height="180" fill="#cfcbc4"/><rect x="114" y="40" width="26" height="180" fill="#cfcbc4"/>',
+  socks:  '<path d="M78 30h44v104l26 34a26 26 0 0 1-40 33l-30-40z" fill="#cfcbc4"/>',
+  bottle: '<path d="M78 66h44v144a12 12 0 0 1-12 12H90a12 12 0 0 1-12-12z" fill="#cfcbc4"/><rect x="86" y="42" width="28" height="24" fill="#bfbbb2"/>',
+  sleeve: '<path d="M72 40h56v170a28 28 0 0 1-56 0z" fill="#cfcbc4"/>'
+};
+
+/* ===== 카테고리 데이터 ===== */
+const CATS = {
+  outer: {
+    num:'01', title:'OUTER',
+    desc:'트레이닝 전후, 체온을 지키는 가장 바깥의 레이어.\n기능성과 실루엣을 모두 놓치지 않은 아우터 라인입니다.',
+    subs:['전체','자켓','후드집업','베스트'],
+    items:[
+      {n:'헤비웨이트 후드 집업', p:89000, flag:'NEW', shape:'hoodie', sub:'후드집업'},
+      {n:'윈드브레이커 트랙 자켓', p:76000, shape:'jacket', sub:'자켓'},
+      {n:'오버핏 코치 자켓', p:72000, was:92000, shape:'jacket', sub:'자켓'},
+      {n:'라이트 다운 베스트', p:68000, shape:'vest', sub:'베스트'},
+      {n:'플리스 하프집업', p:59000, flag:'NEW', shape:'hoodie', sub:'후드집업'},
+      {n:'립스탑 아노락', p:84000, shape:'jacket', soldout:true, sub:'자켓'}
+    ]
+  },
+  top: {
+    num:'02', title:'TOP',
+    desc:'피부에 닿는 촉감과 활동성을 고려해 원단을 선별했습니다.\n단품으로도, 레이어드로도 자연스러운 핏입니다.',
+    subs:['전체','반팔','긴팔','싱글렛','후디'],
+    items:[
+      {n:'머슬핏 트레이닝 티', p:32000, flag:'NEW', shape:'tee', sub:'반팔'},
+      {n:'오버사이즈 헤비 코튼 티', p:36000, shape:'tee', sub:'반팔'},
+      {n:'컴프레션 롱슬리브', p:38000, shape:'sleeve', sub:'긴팔'},
+      {n:'드라이 메쉬 싱글렛', p:26000, was:36000, shape:'vest', sub:'싱글렛'},
+      {n:'크롭 후디', p:54000, flag:'NEW', shape:'hoodie', sub:'후디'},
+      {n:'베이직 로고 티', p:26000, shape:'tee', sub:'반팔'}
+    ]
+  },
+  bottom: {
+    num:'03', title:'BOTTOM',
+    desc:'격렬한 트레이닝에도 무너지지 않는 실루엣.\n컴프레션 쇼츠부터 레깅스까지, 마지막 세트를 위한 하의 라인입니다.',
+    subs:['전체','쇼츠','레깅스','타이츠','팬츠'],
+    items:[
+      {n:'컴프레션 트레이닝 쇼츠', p:42000, flag:'NEW', img:'images/shorts-front.png', img2:'images/shorts-back.png', shape:'shorts', sub:'쇼츠'},
+      {n:'플렉스 트레이닝 레깅스', p:59000, flag:'NEW', shape:'leggings', sub:'레깅스'},
+      {n:'세컨스킨 레깅스', p:49000, was:68000, shape:'leggings', sub:'레깅스'},
+      {n:'코어 쇼츠 7인치 — 오닉스', p:39000, shape:'shorts', sub:'쇼츠'},
+      {n:'언더레이어 하프타이츠', p:35000, shape:'tights', sub:'타이츠'},
+      {n:'와이드 스웨트 팬츠', p:52000, shape:'pants', soldout:true, sub:'팬츠'},
+      {n:'테이퍼드 트레이닝 팬츠', p:56000, shape:'pants', sub:'팬츠'},
+      {n:'리커버리 조거 팬츠', p:54000, flag:'NEW', shape:'pants', sub:'팬츠'}
+    ]
+  },
+  set: {
+    num:'04', title:'SET',
+    desc:'상의와 하의를 고민 없이 한 번에.\n동일한 소재로 통일감을 완성한 세트 구성입니다.',
+    subs:['전체','트레이닝','라운지','컴프레션'],
+    items:[
+      {n:'컴프레션 상하의 세트', p:79000, flag:'NEW', shape:'set', sub:'컴프레션'},
+      {n:'트레이닝 셋업 (후디+조거)', p:112000, shape:'set', sub:'트레이닝'},
+      {n:'드라이 메쉬 세트', p:64000, was:82000, shape:'set', sub:'트레이닝'},
+      {n:'리커버리 라운지 세트', p:98000, shape:'set', sub:'라운지'}
+    ]
+  },
+  acc: {
+    num:'05', title:'ACC',
+    desc:'실용적인 기능과 간결한 디자인.\n일상과 트레이닝의 경계를 채우는 아이템들입니다.',
+    subs:['전체','모자','가방','양말','쉐이커','기타'],
+    items:[
+      {n:'로고 볼캡', p:29000, flag:'NEW', shape:'cap', sub:'모자'},
+      {n:'짐 더플백 40L', p:58000, shape:'bag', sub:'가방'},
+      {n:'리프팅 스트랩', p:18000, shape:'strap', sub:'기타'},
+      {n:'스포츠 삭스 3팩', p:12000, shape:'socks', sub:'양말'},
+      {n:'쉐이커 보틀 600ml', p:15000, shape:'bottle', sub:'쉐이커'},
+      {n:'니 슬리브 (1켤레)', p:34000, shape:'sleeve', soldout:true, sub:'기타'}
+    ]
+  },
+  preorder: {
+    num:'06', title:'PRE-ORDER',
+    desc:'정식 출시 전, 가장 먼저 만나는 컬렉션.\n예약 주문 상품은 순차적으로 출고됩니다.',
+    subs:['전체'],
+    items:[
+      {n:'FW26 시그니처 푸퍼', p:168000, flag:'PRE-ORDER', shape:'jacket', note:'8월 말 순차 출고'},
+      {n:'리미티드 그래픽 후디', p:72000, flag:'PRE-ORDER', shape:'hoodie', note:'8월 말 순차 출고'},
+      {n:'FW26 카고 조거', p:64000, flag:'PRE-ORDER', shape:'pants', note:'9월 초 순차 출고'}
+    ]
+  },
+  archive: {
+    num:'07', title:'ARCHIVE',
+    desc:'지난 시즌의 기록.\n한정 수량으로 정리되는 아카이브 세일입니다.',
+    subs:['전체'],
+    items:[
+      {n:'FW25 트랙 자켓', p:39000, was:78000, shape:'jacket'},
+      {n:'SS25 메쉬 쇼츠', p:19000, was:38000, shape:'shorts'},
+      {n:'FW25 로고 스웨트셔츠', p:29000, was:58000, shape:'tee', soldout:true},
+      {n:'SS25 싱글렛', p:15000, was:29000, shape:'vest'}
+    ]
+  }
+};
+
+const won = n => '₩' + n.toLocaleString('ko-KR');
+const off = (was,p) => Math.round((1 - p/was) * 100);
+
+/* ===== 저장소 (장바구니 / 위시리스트) ===== */
+const store = {
+  get(k, d){ try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch (e) { return d; } },
+  set(k, v){ try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
+};
+let CART = store.get('rawness_cart', []);          // [{cat, idx, color, size, qty}]
+let WISH = new Set(store.get('rawness_wish', [])); // ['cat:idx', ...]
+
+const itemOf = (cat, idx) => CATS[cat] && CATS[cat].items[idx];
+const cartQty = () => CART.reduce((s, c) => s + c.qty, 0);
+const cartTotal = () => CART.reduce((s, c) => s + itemOf(c.cat, c.idx).p * c.qty, 0);
+const FREE_SHIP = 70000, SHIP_FEE = 3000;
+
+/* ===== 렌더링 ===== */
+const bannerLabel = document.getElementById('bannerLabel');
+const bannerTitle = document.getElementById('bannerTitle');
+const catDesc = document.getElementById('catDesc');
+const subcatsEl = document.getElementById('subcats');
+const gridEl = document.getElementById('grid');
+const navEl = document.getElementById('catNav');
+
+let io;
+function observe(){
+  if (io) io.disconnect();
+  io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (e.isIntersecting) {
+        e.target.style.transitionDelay = (e.target.dataset.d || 0) + 'ms';
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.card').forEach((c, i) => {
+    c.dataset.d = (i % 4) * 70;
+    io.observe(c);
+  });
+}
+
+function cardHTML(it, key, idx){
+  let thumb;
+  if (it.img) {
+    // 이미지가 없으면 SVG 실루엣으로 자동 대체
+    const fb = `this.outerHTML='<svg class=&quot;'+this.className+'&quot; viewBox=&quot;0 0 200 260&quot;>${(SHAPES[it.shape] || SHAPES.shorts).replace(/"/g,'&quot;')}</svg>'`;
+    thumb = `<img class="main" src="${it.img}" alt="${it.n}" onerror="${fb}">` +
+            (it.img2 ? `<img class="alt" src="${it.img2}" alt="${it.n} 뒷면" onerror="${fb}">` : '');
+  } else {
+    thumb = `<svg class="main" viewBox="0 0 200 260">${SHAPES[it.shape] || SHAPES.tee}</svg>`;
+  }
+  let flag = '';
+  if (it.was) flag = `<div class="flag sale">SALE ${off(it.was, it.p)}%</div>`;
+  else if (it.flag === 'PRE-ORDER') flag = `<div class="flag pre">PRE-ORDER</div>`;
+  else if (it.flag) flag = `<div class="flag">${it.flag}</div>`;
+  const price = it.was
+    ? `<span class="was">${won(it.was)}</span>${won(it.p)}`
+    : won(it.p);
+  const note = it.note ? `<div class="note">${it.note}</div>` : '';
+  return `<div class="card${it.soldout ? ' soldout' : ''}" data-cat="${key}" data-idx="${idx}" style="cursor:pointer">
+    <div class="thumb">${thumb}${wishBtnHTML(key, idx)}</div>
+    <div class="info">${flag}<div class="name">${it.n}</div><div class="price">${price}</div>${note}</div>
+  </div>`;
+}
+
+const HEART = '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 17.4C4.3 13.2 1.8 10 1.8 7.1c0-2.4 1.9-4.1 4.1-4.1 1.6 0 3.1.9 4.1 2.4 1-1.5 2.5-2.4 4.1-2.4 2.2 0 4.1 1.7 4.1 4.1 0 2.9-2.5 6.1-8.2 10.3z"/></svg>';
+function wishBtnHTML(key, idx){
+  const id = key + ':' + idx;
+  return `<button class="wish-btn${WISH.has(id) ? ' on' : ''}" data-wish="${id}" aria-label="위시리스트에 담기">${HEART}</button>`;
+}
+
+let curKey = 'bottom', curSub = '전체', curSort = 'new';
+
+function subItems(cat, sub){
+  return sub === '전체' ? cat.items : cat.items.filter(it => it.sub === sub);
+}
+
+function renderSubcats(){
+  const cat = CATS[curKey];
+  subcatsEl.innerHTML = cat.subs.map(name =>
+    `<a href="#" data-sub="${name}" class="${name === curSub ? 'active' : ''}">${name} <span>${subItems(cat, name).length}</span></a>`
+  ).join('');
+}
+
+const SORTS = {
+  name: (a, b) => a.it.n.localeCompare(b.it.n, 'ko'),
+  low:  (a, b) => a.it.p - b.it.p,
+  high: (a, b) => b.it.p - a.it.p,
+  sale: (a, b) => (b.it.was ? off(b.it.was, b.it.p) : 0) - (a.it.was ? off(a.it.was, a.it.p) : 0)
+};
+
+function renderGrid(){
+  const cat = CATS[curKey];
+  let arr = cat.items.map((it, i) => ({it, i}));
+  if (curSub !== '전체') arr = arr.filter(x => x.it.sub === curSub);
+  if (SORTS[curSort]) arr = arr.slice().sort(SORTS[curSort]);
+  gridEl.innerHTML = arr.length
+    ? arr.map(x => cardHTML(x.it, curKey, x.i)).join('')
+    : '<div class="empty">등록된 상품이 없습니다.</div>';
+  observe();
+}
+
+function render(key, push = true){
+  const cat = CATS[key];
+  if (!cat) return;
+
+  hideDetail(); // 상세 보기 중이었다면 목록으로 복귀
+
+  curKey = key; curSub = '전체';
+
+  // 배너
+  bannerLabel.textContent = `${cat.num} / ${cat.title}`;
+  bannerTitle.textContent = cat.title;
+  [bannerLabel, bannerTitle].forEach(el => {
+    el.classList.remove('fade-in'); void el.offsetWidth; el.classList.add('fade-in');
+  });
+
+  // 설명 (줄바꿈 처리)
+  catDesc.innerHTML = cat.desc.split('\n').join('<br>');
+
+  renderSubcats();
+  renderGrid();
+
+  // 네비 활성화
+  navEl.querySelectorAll('a').forEach(a =>
+    a.classList.toggle('active', a.dataset.cat === key)
+  );
+
+  // URL 해시 갱신 (미리보기 등 일부 환경에서는 차단되므로 실패해도 무시)
+  if (push) { try { history.replaceState(null, '', '#' + key); } catch (e) {} }
+  document.title = `RAWNESS - ${cat.title}`;
+}
+
+/* 네비 클릭 */
+navEl.addEventListener('click', (e) => {
+  const a = e.target.closest('a[data-cat]');
+  if (!a) return;
+  e.preventDefault();
+  render(a.dataset.cat);
+  document.getElementById('catBanner').scrollIntoView({ behavior: 'smooth' });
+});
+
+/* 서브카테고리 필터 */
+subcatsEl.addEventListener('click', (e) => {
+  const a = e.target.closest('a[data-sub]');
+  if (!a) return;
+  e.preventDefault();
+  curSub = a.dataset.sub;
+  subcatsEl.querySelectorAll('a').forEach(x => x.classList.toggle('active', x === a));
+  renderGrid();
+});
+
+/* 정렬 */
+document.getElementById('sorts').addEventListener('click', (e) => {
+  const a = e.target.closest('a[data-sort]');
+  if (!a) return;
+  e.preventDefault();
+  curSort = a.dataset.sort;
+  document.querySelectorAll('#sorts a').forEach(x => x.classList.toggle('active', x === a));
+  renderGrid();
+});
+
+/* ===== 상품 상세 페이지 ===== */
+const detailEl = document.getElementById('detail');
+const relatedEl = document.getElementById('related');
+const listingEls = ['catBanner','pagination'].map(id => document.getElementById(id))
+  .concat([document.querySelector('.cat-desc'), subcatsEl, document.querySelector('.sortbar'), gridEl]);
+
+const DEF_COLORS = [['오닉스 블랙','#1a1a1a'],['더스트 그레이','#8b8578']];
+const DEF_DESC = '흡습속건 기능성 원단으로 격렬한 트레이닝에도 쾌적함을 유지합니다. 4-way 스트레치 적용으로 어떤 동작에서도 자유로운 가동 범위를 제공합니다.';
+
+function itemColors(it){ return it.colors || DEF_COLORS; }
+function itemSizes(it, key){ return it.sizes || (key === 'acc' ? ['FREE'] : ['S','M','L','XL']); }
+
+function hideDetail(){
+  detailEl.hidden = true;
+  relatedEl.hidden = true;
+  listingEls.forEach(el => el.hidden = false);
+}
+
+function thumbSrc(it, which){
+  if (which === 'main' && it.img) return `<img src="${it.img}" alt="" onerror="this.outerHTML='<svg viewBox=&quot;0 0 200 260&quot;>${(SHAPES[it.shape]||SHAPES.shorts).replace(/"/g,'&quot;')}</svg>'">`;
+  if (which === 'alt' && it.img2) return `<img src="${it.img2}" alt="" onerror="this.outerHTML='<svg viewBox=&quot;0 0 200 260&quot;>${(SHAPES[it.shape]||SHAPES.shorts).replace(/"/g,'&quot;')}</svg>'">`;
+  return `<svg viewBox="0 0 200 260">${SHAPES[it.shape] || SHAPES.tee}</svg>`;
+}
+
+function showDetail(key, idx){
+  const cat = CATS[key];
+  const it = cat.items[idx];
+  if (!it) return;
+
+  listingEls.forEach(el => el.hidden = true);
+
+  let flag = '';
+  if (it.was) flag = `<div class="flag sale">SALE ${off(it.was, it.p)}%</div>`;
+  else if (it.flag === 'PRE-ORDER') flag = `<div class="flag">PRE-ORDER</div>`;
+  else if (it.flag) flag = `<div class="flag">${it.flag}</div>`;
+
+  const price = it.was
+    ? `<span class="was">${won(it.was)}</span>${won(it.p)}`
+    : won(it.p);
+
+  const colors = itemColors(it);
+  const sizes = itemSizes(it, key);
+  const views = it.img2 ? ['main','alt'] : ['main'];
+
+  detailEl.innerHTML = `
+    <div class="crumb">
+      <a href="#" data-cat-link="${key}">RAWNESS</a> /
+      <a href="#" data-cat-link="${key}">${cat.title}</a> /
+      <span>${it.n}</span>
+      <button class="back" id="backBtn">← BACK TO LIST</button>
+    </div>
+    <div class="detail-grid">
+      <div class="gallery">
+        <div class="stage" id="stage">${thumbSrc(it,'main')}</div>
+        ${views.length > 1 ? `<div class="thumbs">${views.map((v,i) =>
+          `<button data-view="${v}" class="${i===0?'active':''}" aria-label="이미지 ${i+1}">${thumbSrc(it,v)}</button>`).join('')}</div>` : ''}
+      </div>
+      <div class="buy">
+        ${flag}
+        <div class="buy-head"><h2>${it.n}</h2>${wishBtnHTML(key, idx)}</div>
+        <div class="price">${price}</div>
+        <p class="lead">${it.desc || DEF_DESC}</p>
+        ${it.note ? `<p class="lead" style="color:var(--accent)">※ ${it.note}</p>` : ''}
+
+        <div class="opt-group">
+          <div class="lab">Color <span id="colorName">${colors[0][0]}</span></div>
+          <div class="opts" id="colorOpts">
+            ${colors.map(([nm,hex],i) =>
+              `<button class="swatch ${i===0?'active':''}" style="background:${hex}" data-name="${nm}" aria-label="${nm}"></button>`).join('')}
+          </div>
+        </div>
+
+        <div class="opt-group">
+          <div class="lab">Size</div>
+          <div class="opts" id="sizeOpts">
+            ${sizes.map((s,i) => `<button class="size ${i===0?'active':''}">${s}</button>`).join('')}
+          </div>
+        </div>
+
+        <div class="qty-row">
+          <div class="qty">
+            <button id="qMinus" aria-label="수량 줄이기">−</button>
+            <output id="qty">1</output>
+            <button id="qPlus" aria-label="수량 늘리기">+</button>
+          </div>
+          <div class="total"><small>총 상품금액</small><span id="total">${won(it.p)}</span></div>
+        </div>
+
+        <div class="buy-btns">
+          <button class="add" id="addBtn" ${it.soldout ? 'disabled' : ''}>${it.soldout ? 'Sold Out' : 'Add to Cart'}</button>
+          <button class="now" id="nowBtn" ${it.soldout ? 'disabled' : ''}>${it.soldout ? '재입고 알림' : 'Buy Now'}</button>
+        </div>
+        <p class="note">70,000원 이상 구매 시 무료배송 · 평일 오후 2시 이전 주문 당일 출고</p>
+
+        <div class="acc-info">
+          <details open>
+            <summary>Details</summary>
+            <div class="body">${it.desc || DEF_DESC}<br>모델 착용 사이즈 : M (178cm / 74kg)</div>
+          </details>
+          <details>
+            <summary>Shipping</summary>
+            <div class="body">기본 배송비 3,000원 (70,000원 이상 무료) · CJ대한통운<br>평일 오후 2시 이전 결제 완료 시 당일 출고됩니다.</div>
+          </details>
+          <details>
+            <summary>Exchange &amp; Return</summary>
+            <div class="body">수령 후 7일 이내 교환/반품 신청 가능<br>착용 흔적, 세탁, 택 제거 시 교환/반품이 불가합니다.</div>
+          </details>
+        </div>
+      </div>
+    </div>`;
+
+  // 같은 카테고리 다른 상품
+  const others = cat.items.map((o,i)=>({o,i})).filter(x => x.i !== idx).slice(0,4);
+  relatedEl.innerHTML = `<h3>You May Also Like</h3>
+    <div class="rel-grid">${others.map(x => cardHTML(x.o, key, x.i)).join('')}</div>`;
+
+  detailEl.hidden = false;
+  relatedEl.hidden = false;
+  relatedEl.querySelectorAll('.card').forEach(c => c.classList.add('in'));
+  window.scrollTo({top:0, behavior:'smooth'});
+
+  /* --- 상세 내 인터랙션 --- */
+  let qty = 1;
+  const qtyEl = document.getElementById('qty');
+  const totalEl = document.getElementById('total');
+  const upd = () => { qtyEl.textContent = qty; totalEl.textContent = won(it.p * qty); };
+  document.getElementById('qMinus').onclick = () => { if (qty > 1){ qty--; upd(); } };
+  document.getElementById('qPlus').onclick = () => { if (qty < 99){ qty++; upd(); } };
+
+  document.getElementById('backBtn').onclick = () => render(key, false);
+
+  const stage = document.getElementById('stage');
+  detailEl.querySelectorAll('.thumbs button').forEach(b => {
+    b.onclick = () => {
+      detailEl.querySelectorAll('.thumbs button').forEach(x => x.classList.remove('active'));
+      b.classList.add('active');
+      stage.innerHTML = thumbSrc(it, b.dataset.view);
+    };
+  });
+
+  const colorName = document.getElementById('colorName');
+  document.getElementById('colorOpts').querySelectorAll('.swatch').forEach(b => {
+    b.onclick = () => {
+      document.querySelectorAll('#colorOpts .swatch').forEach(x => x.classList.remove('active'));
+      b.classList.add('active');
+      colorName.textContent = b.dataset.name;
+    };
+  });
+  document.getElementById('sizeOpts').querySelectorAll('.size').forEach(b => {
+    b.onclick = () => {
+      document.querySelectorAll('#sizeOpts .size').forEach(x => x.classList.remove('active'));
+      b.classList.add('active');
+    };
+  });
+
+  const addBtn = document.getElementById('addBtn');
+  if (!it.soldout) {
+    const selected = () => ({
+      color: (document.querySelector('#colorOpts .swatch.active') || {dataset:{}}).dataset.name || '',
+      size: (document.querySelector('#sizeOpts .size.active') || {}).textContent || ''
+    });
+    addBtn.onclick = () => {
+      const s = selected();
+      addToCart(key, idx, s.color, s.size, qty);
+      addBtn.textContent = 'Added ✓';
+      setTimeout(() => addBtn.textContent = 'Add to Cart', 1200);
+    };
+    document.getElementById('nowBtn').onclick = () => {
+      const s = selected();
+      addToCart(key, idx, s.color, s.size, qty);
+      openLayer('cart');
+    };
+  }
+
+  // 브레드크럼의 카테고리 링크
+  detailEl.querySelectorAll('[data-cat-link]').forEach(a => {
+    a.addEventListener('click', (e) => { e.preventDefault(); render(a.dataset.catLink, false); });
+  });
+}
+
+/* 카드 클릭 → 상세 (목록/연관상품 공통), 하트 버튼은 위시 토글 */
+document.addEventListener('click', (e) => {
+  const wb = e.target.closest('.wish-btn[data-wish]');
+  if (wb) { toggleWish(wb.dataset.wish); return; }
+  const card = e.target.closest('.card[data-cat]');
+  if (card) showDetail(card.dataset.cat, +card.dataset.idx);
+});
+
+/* ===== 위시리스트 ===== */
+const wishCountEl = document.getElementById('wishCount');
+
+function syncWish(){
+  store.set('rawness_wish', [...WISH]);
+  wishCountEl.textContent = WISH.size;
+  document.getElementById('wishDrawerCount').textContent = WISH.size;
+  document.querySelectorAll('.wish-btn[data-wish]').forEach(b =>
+    b.classList.toggle('on', WISH.has(b.dataset.wish)));
+  renderWishDrawer();
+}
+
+function toggleWish(id){
+  WISH.has(id) ? WISH.delete(id) : WISH.add(id);
+  syncWish();
+}
+
+function renderWishDrawer(){
+  const arr = [...WISH].map(id => {
+    const [cat, idx] = id.split(':');
+    return {id, cat, idx:+idx, it: itemOf(cat, +idx)};
+  }).filter(x => x.it);
+  document.getElementById('wishBody').innerHTML = arr.length ? arr.map(x => `
+    <div class="d-item" data-goto="${x.id}">
+      <div class="ph">${thumbSrc(x.it,'main')}</div>
+      <div>
+        <div class="nm">${x.it.n}</div>
+        <div class="opt">${CATS[x.cat].title}${x.it.soldout ? ' · SOLD OUT' : ''}</div>
+        <div class="pr">${won(x.it.p)}</div>
+      </div>
+      <button class="rm" data-unwish="${x.id}" aria-label="위시리스트에서 삭제">×</button>
+    </div>`).join('')
+    : '<div class="d-empty">위시리스트가 비어 있습니다.</div>';
+}
+
+document.getElementById('wishBody').addEventListener('click', (e) => {
+  const rm = e.target.closest('[data-unwish]');
+  if (rm) { toggleWish(rm.dataset.unwish); return; }
+  const row = e.target.closest('[data-goto]');
+  if (row) {
+    const [cat, idx] = row.dataset.goto.split(':');
+    closeLayers();
+    showDetail(cat, +idx);
+  }
+});
+
+/* ===== 장바구니 ===== */
+const cartCountEl = document.getElementById('cartCount');
+
+function saveCart(){
+  store.set('rawness_cart', CART);
+  cartCountEl.textContent = cartQty();
+  document.getElementById('cartDrawerCount').textContent = cartQty();
+  renderCartDrawer();
+}
+
+function addToCart(cat, idx, color, size, qty){
+  const same = CART.find(c => c.cat === cat && c.idx === idx && c.color === color && c.size === size);
+  if (same) same.qty = Math.min(99, same.qty + qty);
+  else CART.push({cat, idx, color, size, qty});
+  saveCart();
+}
+
+function renderCartDrawer(){
+  const body = document.getElementById('cartBody');
+  const foot = document.getElementById('cartFoot');
+  if (!CART.length){
+    body.innerHTML = '<div class="d-empty">장바구니가 비어 있습니다.</div>';
+    foot.innerHTML = '';
+    return;
+  }
+  body.innerHTML = CART.map((c, i) => {
+    const it = itemOf(c.cat, c.idx);
+    return `<div class="d-item" data-goto="${c.cat}:${c.idx}">
+      <div class="ph">${thumbSrc(it,'main')}</div>
+      <div>
+        <div class="nm">${it.n}</div>
+        <div class="opt">${[c.color, c.size].filter(Boolean).join(' / ')}</div>
+        <div class="pr">${won(it.p * c.qty)}</div>
+        <div class="d-qty">
+          <button data-cq="-1" data-i="${i}" aria-label="수량 줄이기">−</button>
+          <output>${c.qty}</output>
+          <button data-cq="1" data-i="${i}" aria-label="수량 늘리기">+</button>
+        </div>
+      </div>
+      <button class="rm" data-crm="${i}" aria-label="장바구니에서 삭제">×</button>
+    </div>`;
+  }).join('');
+  const sum = cartTotal();
+  const ship = sum >= FREE_SHIP ? 0 : SHIP_FEE;
+  foot.innerHTML = `
+    <div class="row"><span>상품금액</span><span class="en">${won(sum)}</span></div>
+    <div class="row"><span>배송비</span><span class="en">${ship ? won(ship) : '무료'}</span></div>
+    <div class="row total"><span>총 결제금액</span><span class="en">${won(sum + ship)}</span></div>
+    <button class="checkout" id="checkoutBtn">Checkout</button>
+    <p class="free-note">${ship ? won(FREE_SHIP - sum) + ' 더 담으면 무료배송!' : '무료배송이 적용되었습니다.'}</p>`;
+  document.getElementById('checkoutBtn').onclick = (e) => {
+    e.target.textContent = '결제 준비 중...';
+    setTimeout(() => e.target.textContent = 'Checkout', 1200);
+  };
+}
+
+document.getElementById('cartBody').addEventListener('click', (e) => {
+  const q = e.target.closest('[data-cq]');
+  if (q) {
+    const c = CART[+q.dataset.i];
+    if (c) { c.qty = Math.max(1, Math.min(99, c.qty + +q.dataset.cq)); saveCart(); }
+    return;
+  }
+  const rm = e.target.closest('[data-crm]');
+  if (rm) { CART.splice(+rm.dataset.crm, 1); saveCart(); return; }
+  const row = e.target.closest('[data-goto]');
+  if (row) {
+    const [cat, idx] = row.dataset.goto.split(':');
+    closeLayers();
+    showDetail(cat, +idx);
+  }
+});
+
+/* ===== 레이어(드로어/검색) 열기·닫기 ===== */
+const scrim = document.getElementById('scrim');
+const layers = {
+  cart: document.getElementById('cartDrawer'),
+  wish: document.getElementById('wishDrawer'),
+  search: document.getElementById('searchLayer')
+};
+
+function openLayer(which){
+  closeLayers();
+  if (which === 'search') {
+    layers.search.classList.add('show');
+    runSearch();
+    setTimeout(() => document.getElementById('searchInput').focus(), 260);
+  } else {
+    layers[which].classList.add('open');
+    scrim.classList.add('show');
+  }
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLayers(){
+  layers.cart.classList.remove('open');
+  layers.wish.classList.remove('open');
+  layers.search.classList.remove('show');
+  scrim.classList.remove('show');
+  document.body.style.overflow = '';
+}
+
+document.getElementById('cartBtn').addEventListener('click', () => openLayer('cart'));
+document.getElementById('wishBtn').addEventListener('click', () => openLayer('wish'));
+document.getElementById('searchBtn').addEventListener('click', () => openLayer('search'));
+scrim.addEventListener('click', closeLayers);
+document.querySelectorAll('[data-close]').forEach(b => b.addEventListener('click', closeLayers));
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLayers(); });
+
+/* ===== 검색 ===== */
+const searchInput = document.getElementById('searchInput');
+const searchResults = document.getElementById('searchResults');
+const ALL_ITEMS = Object.entries(CATS).flatMap(([key, cat]) =>
+  cat.items.map((it, i) => ({key, cat, it, i})));
+
+function runSearch(){
+  const q = searchInput.value.trim().toLowerCase();
+  if (!q) {
+    searchResults.innerHTML = '<div class="s-hint">상품명 또는 카테고리명으로 검색할 수 있습니다.</div>';
+    return;
+  }
+  const hits = ALL_ITEMS.filter(x =>
+    x.it.n.toLowerCase().includes(q) ||
+    x.cat.title.toLowerCase().includes(q) ||
+    (x.it.sub || '').toLowerCase().includes(q));
+  searchResults.innerHTML = hits.length ? hits.map(x => `
+    <div class="s-row" data-goto="${x.key}:${x.i}">
+      <div class="ph">${thumbSrc(x.it,'main')}</div>
+      <div>
+        <div class="s-cat">${x.cat.title}</div>
+        <div class="nm">${x.it.n}${x.it.soldout ? ' <span style="color:var(--muted)">— SOLD OUT</span>' : ''}</div>
+      </div>
+      <div class="pr">${won(x.it.p)}</div>
+    </div>`).join('')
+    : `<div class="s-hint">'${searchInput.value.trim()}'에 대한 검색 결과가 없습니다.</div>`;
+}
+
+searchInput.addEventListener('input', runSearch);
+searchResults.addEventListener('click', (e) => {
+  const row = e.target.closest('[data-goto]');
+  if (!row) return;
+  const [cat, idx] = row.dataset.goto.split(':');
+  closeLayers();
+  showDetail(cat, +idx);
+});
+
+/* 최초 로드: 저장된 장바구니/위시리스트 복원 → URL 해시 → 없으면 BOTTOM */
+CART = CART.filter(c => itemOf(c.cat, c.idx));
+WISH = new Set([...WISH].filter(id => { const [c, i] = id.split(':'); return itemOf(c, +i); }));
+saveCart();
+syncWish();
+const initial = location.hash.replace('#','');
+render(CATS[initial] ? initial : 'bottom', false);
+</script>
+
+</body>
+</html>
