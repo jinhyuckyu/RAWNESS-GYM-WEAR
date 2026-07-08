@@ -29,6 +29,7 @@
   button{font:inherit; cursor:pointer;}
   .en{font-family:'Barlow Condensed',sans-serif;}
   :focus-visible{outline:2px solid var(--ink); outline-offset:3px;}
+  [hidden]{display:none !important;}
 
   /* ===== 슬래시 컷 로고 ===== */
   .wordmark{
@@ -410,17 +411,63 @@
   .d-qty button:hover{color:var(--ink);}
   .d-qty output{width:28px; text-align:center; font-family:'Barlow Condensed',sans-serif; font-size:12.5px;}
   .d-empty{padding:70px 0; text-align:center; font-size:12.5px; color:var(--muted);}
-  .drawer-foot{border-top:1px solid var(--line); padding:18px 22px;}
-  .drawer-foot .row{display:flex; justify-content:space-between; font-size:12px; color:var(--muted); margin-bottom:6px;}
-  .drawer-foot .row.total{font-size:14px; color:var(--ink); font-weight:700; margin:10px 0 14px;}
-  .drawer-foot .row.total .en{font-size:16px;}
-  .drawer-foot .checkout{
-    width:100%; padding:14px 0; background:var(--ink); color:#fff;
-    border:1px solid var(--ink); font-family:'Barlow Condensed',sans-serif;
-    font-size:13.5px; letter-spacing:.18em; text-transform:uppercase; transition:all .2s;
+
+  /* ===== 장바구니 페이지 ===== */
+  .cart-page{max-width:1100px; margin:0 auto; padding:46px 24px 90px;}
+  .cp-label{
+    font-family:'Barlow Condensed',sans-serif; font-size:12px;
+    letter-spacing:.4em; color:var(--muted); margin-bottom:10px;
   }
-  .drawer-foot .checkout:hover{background:var(--accent); border-color:var(--accent);}
-  .drawer-foot .free-note{font-size:11px; color:var(--muted); margin-top:10px; text-align:center;}
+  .cart-page h1{font-size:40px;}
+  .cp-body{margin-top:30px; border-top:1px solid var(--ink);}
+  .cp-item{
+    display:grid; grid-template-columns:90px 1fr auto 130px 34px;
+    gap:20px; align-items:center; padding:20px 0; border-bottom:1px solid var(--line);
+  }
+  .cp-item .ph{
+    width:90px; aspect-ratio:3/4; background:var(--surface); overflow:hidden;
+    display:flex; align-items:center; justify-content:center; cursor:pointer;
+  }
+  .cp-item .ph img{width:100%; height:100%; object-fit:cover;}
+  .cp-item .ph svg{width:50%; opacity:.8;}
+  .cp-item .nm{font-size:13.5px; line-height:1.5; cursor:pointer;}
+  .cp-item .nm:hover{text-decoration:underline; text-underline-offset:3px;}
+  .cp-item .opt{font-size:11.5px; color:var(--muted); margin-top:4px;}
+  .cp-item .unit{font-family:'Barlow Condensed',sans-serif; font-size:13px; color:var(--muted); margin-top:6px;}
+  .cp-item .d-qty{margin-top:0;}
+  .cp-item .line-total{font-family:'Barlow Condensed',sans-serif; font-size:15.5px; font-weight:600; text-align:right;}
+  .cp-item .rm{background:none; border:none; color:var(--muted); font-size:16px; line-height:1; padding:0 2px;}
+  .cp-item .rm:hover{color:var(--ink);}
+  .cp-summary{margin:30px 0 0 auto; max-width:380px;}
+  .cp-summary .row{display:flex; justify-content:space-between; font-size:12px; color:var(--muted); padding:6px 0;}
+  .cp-summary .row.total{
+    font-size:14px; color:var(--ink); font-weight:700;
+    border-top:1px solid var(--line); margin-top:8px; padding-top:14px;
+  }
+  .cp-summary .row.total .en{font-size:17px;}
+  .cp-actions{display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:16px;}
+  .cp-continue{
+    padding:14px 0; background:none; color:var(--ink); border:1px solid var(--ink);
+    font-family:'Barlow Condensed',sans-serif; font-size:13.5px;
+    letter-spacing:.18em; text-transform:uppercase; transition:all .2s;
+  }
+  .cp-continue:hover{background:var(--surface);}
+  .checkout{
+    padding:14px 0; background:var(--ink); color:#fff; border:1px solid var(--ink);
+    font-family:'Barlow Condensed',sans-serif; font-size:13.5px;
+    letter-spacing:.18em; text-transform:uppercase; transition:all .2s;
+  }
+  .checkout:hover{background:var(--accent); border-color:var(--accent);}
+  .free-note{font-size:11px; color:var(--muted); margin-top:10px; text-align:center;}
+  .cp-empty{padding:70px 0 30px; text-align:center; font-size:12.5px; color:var(--muted); line-height:2;}
+  .cp-empty .cp-continue{margin-top:18px; padding:13px 34px;}
+  @media (max-width:980px){
+    .cp-item{grid-template-columns:70px 1fr 30px; gap:12px; align-items:start;}
+    .cp-item .ph{width:70px;}
+    .cp-item .d-qty{grid-column:2; margin-top:4px;}
+    .cp-item .line-total{grid-column:2; text-align:left; margin-top:6px;}
+    .cp-summary{max-width:none;}
+  }
 
   /* ===== 검색 레이어 ===== */
   .search-layer{
@@ -548,6 +595,7 @@
 
 <section class="detail" id="detail" hidden></section>
 <section class="related" id="related" hidden></section>
+<section class="cart-page" id="cartPage" hidden></section>
 
 <footer>
   <div class="foot-top">
@@ -594,15 +642,6 @@
 </footer>
 
 <div class="scrim" id="scrim"></div>
-
-<aside class="drawer" id="cartDrawer" aria-label="장바구니">
-  <div class="drawer-head">
-    <h3>Cart <span id="cartDrawerCount">0</span></h3>
-    <button class="drawer-close" data-close aria-label="닫기">×</button>
-  </div>
-  <div class="drawer-body" id="cartBody"></div>
-  <div class="drawer-foot" id="cartFoot"></div>
-</aside>
 
 <aside class="drawer" id="wishDrawer" aria-label="위시리스트">
   <div class="drawer-head">
@@ -906,6 +945,7 @@ document.getElementById('sorts').addEventListener('click', (e) => {
 /* ===== 상품 상세 페이지 ===== */
 const detailEl = document.getElementById('detail');
 const relatedEl = document.getElementById('related');
+const cartPageEl = document.getElementById('cartPage');
 const listingEls = ['catBanner','pagination'].map(id => document.getElementById(id))
   .concat([document.querySelector('.cat-desc'), subcatsEl, document.querySelector('.sortbar'), gridEl]);
 
@@ -918,6 +958,7 @@ function itemSizes(it, key){ return it.sizes || (key === 'acc' ? ['FREE'] : ['S'
 function hideDetail(){
   detailEl.hidden = true;
   relatedEl.hidden = true;
+  cartPageEl.hidden = true;
   listingEls.forEach(el => el.hidden = false);
 }
 
@@ -933,6 +974,7 @@ function showDetail(key, idx){
   if (!it) return;
 
   listingEls.forEach(el => el.hidden = true);
+  cartPageEl.hidden = true;
 
   let flag = '';
   if (it.was) flag = `<div class="flag sale">SALE ${off(it.was, it.p)}%</div>`;
@@ -1073,7 +1115,7 @@ function showDetail(key, idx){
     document.getElementById('nowBtn').onclick = () => {
       const s = selected();
       addToCart(key, idx, s.color, s.size, qty);
-      openLayer('cart');
+      showCartPage();
     };
   }
 
@@ -1143,8 +1185,7 @@ const cartCountEl = document.getElementById('cartCount');
 function saveCart(){
   store.set('rawness_cart', CART);
   cartCountEl.textContent = cartQty();
-  document.getElementById('cartDrawerCount').textContent = cartQty();
-  renderCartDrawer();
+  if (!cartPageEl.hidden) renderCartPage();
 }
 
 function addToCart(cat, idx, color, size, qty){
@@ -1154,46 +1195,61 @@ function addToCart(cat, idx, color, size, qty){
   saveCart();
 }
 
-function renderCartDrawer(){
-  const body = document.getElementById('cartBody');
-  const foot = document.getElementById('cartFoot');
+function renderCartPage(){
+  const head = `<p class="cp-label">SHOPPING BAG</p><h1 class="wordmark">CART</h1>`;
   if (!CART.length){
-    body.innerHTML = '<div class="d-empty">장바구니가 비어 있습니다.</div>';
-    foot.innerHTML = '';
+    cartPageEl.innerHTML = `${head}
+      <div class="cp-empty">장바구니가 비어 있습니다.<br>
+        <button class="cp-continue" data-continue>Continue Shopping</button>
+      </div>`;
     return;
   }
-  body.innerHTML = CART.map((c, i) => {
+  const rows = CART.map((c, i) => {
     const it = itemOf(c.cat, c.idx);
-    return `<div class="d-item" data-goto="${c.cat}:${c.idx}">
-      <div class="ph">${thumbSrc(it,'main')}</div>
+    return `<div class="cp-item">
+      <div class="ph" data-goto="${c.cat}:${c.idx}">${thumbSrc(it,'main')}</div>
       <div>
-        <div class="nm">${it.n}</div>
+        <div class="nm" data-goto="${c.cat}:${c.idx}">${it.n}</div>
         <div class="opt">${[c.color, c.size].filter(Boolean).join(' / ')}</div>
-        <div class="pr">${won(it.p * c.qty)}</div>
-        <div class="d-qty">
-          <button data-cq="-1" data-i="${i}" aria-label="수량 줄이기">−</button>
-          <output>${c.qty}</output>
-          <button data-cq="1" data-i="${i}" aria-label="수량 늘리기">+</button>
-        </div>
+        <div class="unit">${won(it.p)}</div>
       </div>
+      <div class="d-qty">
+        <button data-cq="-1" data-i="${i}" aria-label="수량 줄이기">−</button>
+        <output>${c.qty}</output>
+        <button data-cq="1" data-i="${i}" aria-label="수량 늘리기">+</button>
+      </div>
+      <div class="line-total">${won(it.p * c.qty)}</div>
       <button class="rm" data-crm="${i}" aria-label="장바구니에서 삭제">×</button>
     </div>`;
   }).join('');
   const sum = cartTotal();
   const ship = sum >= FREE_SHIP ? 0 : SHIP_FEE;
-  foot.innerHTML = `
-    <div class="row"><span>상품금액</span><span class="en">${won(sum)}</span></div>
-    <div class="row"><span>배송비</span><span class="en">${ship ? won(ship) : '무료'}</span></div>
-    <div class="row total"><span>총 결제금액</span><span class="en">${won(sum + ship)}</span></div>
-    <button class="checkout" id="checkoutBtn">Checkout</button>
-    <p class="free-note">${ship ? won(FREE_SHIP - sum) + ' 더 담으면 무료배송!' : '무료배송이 적용되었습니다.'}</p>`;
-  document.getElementById('checkoutBtn').onclick = (e) => {
-    e.target.textContent = '결제 준비 중...';
-    setTimeout(() => e.target.textContent = 'Checkout', 1200);
-  };
+  cartPageEl.innerHTML = `${head}
+    <div class="cp-body">${rows}</div>
+    <div class="cp-summary">
+      <div class="row"><span>상품금액</span><span class="en">${won(sum)}</span></div>
+      <div class="row"><span>배송비</span><span class="en">${ship ? won(ship) : '무료'}</span></div>
+      <div class="row total"><span>총 결제금액</span><span class="en">${won(sum + ship)}</span></div>
+      <div class="cp-actions">
+        <button class="cp-continue" data-continue>Continue Shopping</button>
+        <button class="checkout" data-checkout>Checkout</button>
+      </div>
+      <p class="free-note">${ship ? won(FREE_SHIP - sum) + ' 더 담으면 무료배송!' : '무료배송이 적용되었습니다.'}</p>
+    </div>`;
 }
 
-document.getElementById('cartBody').addEventListener('click', (e) => {
+function showCartPage(){
+  closeLayers();
+  listingEls.forEach(el => el.hidden = true);
+  detailEl.hidden = true;
+  relatedEl.hidden = true;
+  renderCartPage();
+  cartPageEl.hidden = false;
+  window.scrollTo({top:0, behavior:'smooth'});
+  document.title = 'RAWNESS - CART';
+}
+
+cartPageEl.addEventListener('click', (e) => {
   const q = e.target.closest('[data-cq]');
   if (q) {
     const c = CART[+q.dataset.i];
@@ -1202,10 +1258,20 @@ document.getElementById('cartBody').addEventListener('click', (e) => {
   }
   const rm = e.target.closest('[data-crm]');
   if (rm) { CART.splice(+rm.dataset.crm, 1); saveCart(); return; }
+  if (e.target.closest('[data-continue]')) {
+    render(curKey, false);
+    window.scrollTo({top:0, behavior:'smooth'});
+    return;
+  }
+  const co = e.target.closest('[data-checkout]');
+  if (co) {
+    co.textContent = '결제 준비 중...';
+    setTimeout(() => co.textContent = 'Checkout', 1200);
+    return;
+  }
   const row = e.target.closest('[data-goto]');
   if (row) {
     const [cat, idx] = row.dataset.goto.split(':');
-    closeLayers();
     showDetail(cat, +idx);
   }
 });
@@ -1213,7 +1279,6 @@ document.getElementById('cartBody').addEventListener('click', (e) => {
 /* ===== 레이어(드로어/검색) 열기·닫기 ===== */
 const scrim = document.getElementById('scrim');
 const layers = {
-  cart: document.getElementById('cartDrawer'),
   wish: document.getElementById('wishDrawer'),
   search: document.getElementById('searchLayer')
 };
@@ -1232,14 +1297,13 @@ function openLayer(which){
 }
 
 function closeLayers(){
-  layers.cart.classList.remove('open');
   layers.wish.classList.remove('open');
   layers.search.classList.remove('show');
   scrim.classList.remove('show');
   document.body.style.overflow = '';
 }
 
-document.getElementById('cartBtn').addEventListener('click', () => openLayer('cart'));
+document.getElementById('cartBtn').addEventListener('click', () => showCartPage());
 document.getElementById('wishBtn').addEventListener('click', () => openLayer('wish'));
 document.getElementById('searchBtn').addEventListener('click', () => openLayer('search'));
 scrim.addEventListener('click', closeLayers);
