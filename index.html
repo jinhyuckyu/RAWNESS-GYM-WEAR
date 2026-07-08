@@ -469,6 +469,105 @@
     .cp-summary{max-width:none;}
   }
 
+  /* ===== 사이즈 가이드 ===== */
+  .size-table{width:100%; border-collapse:collapse; margin-top:4px;}
+  .size-table th{
+    font-family:'Barlow Condensed',sans-serif; font-size:11.5px; letter-spacing:.1em;
+    color:var(--ink); border-bottom:1px solid var(--ink); padding:8px 6px; text-align:left; font-weight:500;
+  }
+  .size-table td{border-bottom:1px solid var(--line); padding:8px 6px; font-size:11.5px;}
+  .size-table td.en{font-size:12.5px;}
+
+  /* ===== 무료배송 게이지 ===== */
+  .ship-bar{height:3px; background:var(--line); margin-top:16px; overflow:hidden;}
+  .ship-bar .fill{height:100%; background:var(--ink); transition:width .4s var(--ease);}
+
+  /* ===== 주문서(체크아웃) ===== */
+  .checkout-page, .orders-page{max-width:1100px; margin:0 auto; padding:46px 24px 90px;}
+  .checkout-page h1, .orders-page h1{font-size:40px;}
+  .co-grid{display:grid; grid-template-columns:1fr 380px; gap:56px; margin-top:34px; align-items:start;}
+  .co-sec{
+    font-family:'Barlow Condensed',sans-serif; font-size:13px; letter-spacing:.25em;
+    text-transform:uppercase; font-weight:600;
+    margin:32px 0 16px; padding-bottom:10px; border-bottom:1px solid var(--ink);
+  }
+  .co-form .co-sec:first-child{margin-top:0;}
+  .co-side{position:sticky; top:120px; border:1px solid var(--line); padding:24px 22px;}
+  .co-side .co-sec{margin-top:0;}
+  .field{margin-bottom:18px;}
+  .field label{
+    display:block; font-family:'Barlow Condensed',sans-serif; font-size:11.5px;
+    letter-spacing:.18em; text-transform:uppercase; color:var(--muted); margin-bottom:6px;
+  }
+  .field input{
+    width:100%; border:none; border-bottom:1px solid var(--line); background:none;
+    padding:9px 2px; font:inherit; font-size:13px; outline:none; transition:border-color .2s;
+  }
+  .field input:focus{border-color:var(--ink);}
+  .field .err{display:none; font-size:11px; color:var(--accent); margin-top:5px;}
+  .field.error input{border-color:var(--accent);}
+  .field.error .err{display:block;}
+  .pay-opts{display:grid; grid-template-columns:repeat(3,1fr); gap:8px;}
+  .pay-opts label{
+    border:1px solid var(--line); padding:12px 0; text-align:center;
+    font-size:12px; cursor:pointer; transition:all .2s;
+  }
+  .pay-opts label:hover{border-color:var(--ink);}
+  .pay-opts input{display:none;}
+  .pay-opts label:has(input:checked){background:var(--ink); border-color:var(--ink); color:#fff;}
+  .coupon{display:flex; gap:8px;}
+  .coupon input{
+    flex:1; border:1px solid var(--line); background:none; padding:10px 12px;
+    font:inherit; font-size:12.5px; outline:none;
+  }
+  .coupon input:focus{border-color:var(--ink);}
+  .coupon button{padding:0 22px; background:var(--ink); color:#fff; border:1px solid var(--ink); font-size:12px; transition:all .2s;}
+  .coupon button:hover{background:var(--accent); border-color:var(--accent);}
+  .coupon-msg{font-size:11.5px; margin-top:8px;}
+  .coupon-msg.ok{color:#1b7f4d;}
+  .coupon-msg.no{color:var(--accent);}
+  .co-line{display:flex; justify-content:space-between; gap:10px; font-size:12px; padding:7px 0; border-bottom:1px solid var(--line);}
+  .co-line em{font-style:normal; color:var(--muted); font-size:11px;}
+  .co-side .row{display:flex; justify-content:space-between; font-size:12px; color:var(--muted); padding:5px 0;}
+  .co-side .row.disc{color:var(--accent);}
+  .co-side .row.total{
+    font-size:14px; color:var(--ink); font-weight:700;
+    border-top:1px solid var(--line); margin-top:8px; padding-top:13px;
+  }
+  .co-side .row.total .en{font-size:17px;}
+  .co-pay{width:100%; margin-top:16px;}
+  .co-back{width:100%; margin-top:8px;}
+
+  /* ===== 주문 완료 ===== */
+  .done{max-width:560px; margin:0 auto; text-align:center; padding-top:20px;}
+  .done-msg{font-size:12.5px; color:var(--muted); line-height:2; margin:18px 0 26px;}
+  .done-box{border:1px solid var(--line); padding:22px; text-align:left;}
+  .done-box .row{display:flex; justify-content:space-between; gap:14px; font-size:12.5px; padding:7px 0; color:var(--muted);}
+  .done-box .row span:last-child{color:var(--ink); text-align:right;}
+  .done-box .row .no{font-weight:600; letter-spacing:.06em; font-size:14px;}
+  .done-box .row.total{border-top:1px solid var(--line); margin-top:8px; padding-top:14px; font-weight:700;}
+  .done-box .row.total .en{font-size:16px;}
+  .done-actions{display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:20px;}
+
+  /* ===== 주문조회 ===== */
+  .order-list{margin-top:30px;}
+  .order-card{border:1px solid var(--line); padding:20px 22px; margin-bottom:14px;}
+  .order-head{
+    display:flex; justify-content:space-between; align-items:center;
+    padding-bottom:12px; border-bottom:1px solid var(--line); margin-bottom:6px;
+  }
+  .order-no{font-family:'Barlow Condensed',sans-serif; font-size:14.5px; font-weight:600; letter-spacing:.06em; margin-right:12px;}
+  .order-date{font-size:11.5px; color:var(--muted);}
+  .order-status{font-size:11px; letter-spacing:.06em; background:var(--ink); color:#fff; padding:4px 10px;}
+  .order-line{display:flex; justify-content:space-between; gap:10px; font-size:12.5px; padding:8px 0; border-bottom:1px solid var(--line);}
+  .order-line em{font-style:normal; color:var(--muted); font-size:11px; margin-left:6px;}
+  .order-foot{display:flex; justify-content:space-between; align-items:center; padding-top:14px; font-size:11.5px; color:var(--muted);}
+  .order-foot .total{font-family:'Barlow Condensed',sans-serif; font-size:15.5px; font-weight:600; color:var(--ink);}
+  @media (max-width:980px){
+    .co-grid{grid-template-columns:1fr; gap:34px;}
+    .co-side{position:static;}
+  }
+
   /* ===== 검색 레이어 ===== */
   .search-layer{
     position:fixed; inset:0; z-index:95; background:rgba(255,255,255,.98);
@@ -595,7 +694,10 @@
 
 <section class="detail" id="detail" hidden></section>
 <section class="related" id="related" hidden></section>
+<section class="related" id="recent" hidden></section>
 <section class="cart-page" id="cartPage" hidden></section>
+<section class="checkout-page" id="checkoutPage" hidden></section>
+<section class="orders-page" id="ordersPage" hidden></section>
 
 <footer>
   <div class="foot-top">
@@ -789,6 +891,11 @@ const store = {
 };
 let CART = store.get('rawness_cart', []);          // [{cat, idx, color, size, qty}]
 let WISH = new Set(store.get('rawness_wish', [])); // ['cat:idx', ...]
+let RECENT = store.get('rawness_recent', []);      // ['cat:idx', ...] 최근 본 순
+let ORDERS = store.get('rawness_orders', []);      // 주문 내역 (최신순)
+
+const esc = s => String(s).replace(/[&<>"']/g, m =>
+  ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
 
 const itemOf = (cat, idx) => CATS[cat] && CATS[cat].items[idx];
 const cartQty = () => CART.reduce((s, c) => s + c.qty, 0);
@@ -945,7 +1052,12 @@ document.getElementById('sorts').addEventListener('click', (e) => {
 /* ===== 상품 상세 페이지 ===== */
 const detailEl = document.getElementById('detail');
 const relatedEl = document.getElementById('related');
+const recentEl = document.getElementById('recent');
 const cartPageEl = document.getElementById('cartPage');
+const checkoutEl = document.getElementById('checkoutPage');
+const ordersEl = document.getElementById('ordersPage');
+const PAGES = [detailEl, relatedEl, recentEl, cartPageEl, checkoutEl, ordersEl];
+function hideAllPages(){ PAGES.forEach(el => el.hidden = true); }
 const listingEls = ['catBanner','pagination'].map(id => document.getElementById(id))
   .concat([document.querySelector('.cat-desc'), subcatsEl, document.querySelector('.sortbar'), gridEl]);
 
@@ -955,10 +1067,22 @@ const DEF_DESC = '흡습속건 기능성 원단으로 격렬한 트레이닝에�
 function itemColors(it){ return it.colors || DEF_COLORS; }
 function itemSizes(it, key){ return it.sizes || (key === 'acc' ? ['FREE'] : ['S','M','L','XL']); }
 
+function sizeGuideHTML(key){
+  if (key === 'acc') return '본 상품은 FREE 사이즈입니다. 상세 치수는 상품 설명을 참고해주세요.';
+  const bottoms = key === 'bottom';
+  const head = bottoms ? ['사이즈','허리단면','힙단면','총장'] : ['사이즈','가슴단면','어깨너비','총장'];
+  const rows = bottoms
+    ? [['S',34,47,95],['M',36,49,97],['L',38,51,99],['XL',40,53,101]]
+    : [['S',52,44,68],['M',55,46,70],['L',58,48,72],['XL',61,50,74]];
+  return `<table class="size-table">
+    <thead><tr>${head.map(h => `<th>${h}</th>`).join('')}</tr></thead>
+    <tbody>${rows.map(r => `<tr>${r.map((v,i) => `<td class="${i ? 'en' : ''}">${v}</td>`).join('')}</tr>`).join('')}</tbody>
+  </table>
+  <p style="margin-top:8px">단위: cm · 측정 방법에 따라 1~2cm 오차가 있을 수 있습니다.</p>`;
+}
+
 function hideDetail(){
-  detailEl.hidden = true;
-  relatedEl.hidden = true;
-  cartPageEl.hidden = true;
+  hideAllPages();
   listingEls.forEach(el => el.hidden = false);
 }
 
@@ -974,7 +1098,7 @@ function showDetail(key, idx){
   if (!it) return;
 
   listingEls.forEach(el => el.hidden = true);
-  cartPageEl.hidden = true;
+  hideAllPages();
 
   let flag = '';
   if (it.was) flag = `<div class="flag sale">SALE ${off(it.was, it.p)}%</div>`;
@@ -1045,6 +1169,10 @@ function showDetail(key, idx){
             <div class="body">${it.desc || DEF_DESC}<br>모델 착용 사이즈 : M (178cm / 74kg)</div>
           </details>
           <details>
+            <summary>Size Guide</summary>
+            <div class="body">${sizeGuideHTML(key)}</div>
+          </details>
+          <details>
             <summary>Shipping</summary>
             <div class="body">기본 배송비 3,000원 (70,000원 이상 무료) · CJ대한통운<br>평일 오후 2시 이전 결제 완료 시 당일 출고됩니다.</div>
           </details>
@@ -1060,6 +1188,21 @@ function showDetail(key, idx){
   const others = cat.items.map((o,i)=>({o,i})).filter(x => x.i !== idx).slice(0,4);
   relatedEl.innerHTML = `<h3>You May Also Like</h3>
     <div class="rel-grid">${others.map(x => cardHTML(x.o, key, x.i)).join('')}</div>`;
+
+  // 최근 본 상품 기록 + 렌더 (현재 상품 제외)
+  const rid = key + ':' + idx;
+  RECENT = [rid, ...RECENT.filter(r => r !== rid)].slice(0, 9);
+  store.set('rawness_recent', RECENT);
+  const recentItems = RECENT.filter(r => r !== rid).map(r => {
+    const [c, i] = r.split(':');
+    return {c, i:+i, it: itemOf(c, +i)};
+  }).filter(x => x.it).slice(0, 4);
+  if (recentItems.length){
+    recentEl.innerHTML = `<h3>Recently Viewed</h3>
+      <div class="rel-grid">${recentItems.map(x => cardHTML(x.it, x.c, x.i)).join('')}</div>`;
+    recentEl.querySelectorAll('.card').forEach(c => c.classList.add('in'));
+    recentEl.hidden = false;
+  }
 
   detailEl.hidden = false;
   relatedEl.hidden = false;
@@ -1234,6 +1377,7 @@ function renderCartPage(){
         <button class="cp-continue" data-continue>Continue Shopping</button>
         <button class="checkout" data-checkout>Checkout</button>
       </div>
+      <div class="ship-bar"><div class="fill" style="width:${Math.min(100, Math.round(sum / FREE_SHIP * 100))}%"></div></div>
       <p class="free-note">${ship ? won(FREE_SHIP - sum) + ' 더 담으면 무료배송!' : '무료배송이 적용되었습니다.'}</p>
     </div>`;
 }
@@ -1241,8 +1385,7 @@ function renderCartPage(){
 function showCartPage(){
   closeLayers();
   listingEls.forEach(el => el.hidden = true);
-  detailEl.hidden = true;
-  relatedEl.hidden = true;
+  hideAllPages();
   renderCartPage();
   cartPageEl.hidden = false;
   window.scrollTo({top:0, behavior:'smooth'});
@@ -1263,16 +1406,215 @@ cartPageEl.addEventListener('click', (e) => {
     window.scrollTo({top:0, behavior:'smooth'});
     return;
   }
-  const co = e.target.closest('[data-checkout]');
-  if (co) {
-    co.textContent = '결제 준비 중...';
-    setTimeout(() => co.textContent = 'Checkout', 1200);
-    return;
-  }
+  if (e.target.closest('[data-checkout]')) { showCheckout(); return; }
   const row = e.target.closest('[data-goto]');
   if (row) {
     const [cat, idx] = row.dataset.goto.split(':');
     showDetail(cat, +idx);
+  }
+});
+
+/* ===== 주문서(체크아웃) ===== */
+let coupon = null; // {code, rate}
+const COUPONS = { 'RAWNESS10': 0.10, 'WELCOME5': 0.05 };
+
+function coAmounts(){
+  const sum = cartTotal();
+  const discount = coupon ? Math.round(sum * coupon.rate) : 0;
+  const ship = (sum - discount) >= FREE_SHIP ? 0 : SHIP_FEE;
+  return {sum, discount, ship, total: sum - discount + ship};
+}
+
+function renderCoSummary(){
+  const a = coAmounts();
+  document.getElementById('coSummary').innerHTML = `
+    ${CART.map(c => { const it = itemOf(c.cat, c.idx);
+      return `<div class="co-line"><span>${it.n} <em>× ${c.qty}</em></span><span class="en">${won(it.p * c.qty)}</span></div>`; }).join('')}
+    <div class="row" style="margin-top:14px"><span>상품금액</span><span class="en">${won(a.sum)}</span></div>
+    ${a.discount ? `<div class="row disc"><span>쿠폰 할인 (${coupon.code})</span><span class="en">−${won(a.discount)}</span></div>` : ''}
+    <div class="row"><span>배송비</span><span class="en">${a.ship ? won(a.ship) : '무료'}</span></div>
+    <div class="row total"><span>총 결제금액</span><span class="en">${won(a.total)}</span></div>`;
+}
+
+function showCheckout(){
+  if (!CART.length) return;
+  closeLayers();
+  listingEls.forEach(el => el.hidden = true);
+  hideAllPages();
+  coupon = null;
+  checkoutEl.innerHTML = `
+    <p class="cp-label">CHECKOUT</p>
+    <h1 class="wordmark">ORDER</h1>
+    <div class="co-grid">
+      <div class="co-form">
+        <h4 class="co-sec">배송 정보</h4>
+        <div class="field" data-f="name">
+          <label for="coName">받는 분 *</label>
+          <input id="coName" autocomplete="name">
+          <p class="err">받는 분 성함을 입력해주세요.</p>
+        </div>
+        <div class="field" data-f="phone">
+          <label for="coPhone">휴대폰 번호 *</label>
+          <input id="coPhone" inputmode="numeric" placeholder="010-0000-0000">
+          <p class="err">올바른 휴대폰 번호를 입력해주세요.</p>
+        </div>
+        <div class="field" data-f="addr">
+          <label for="coAddr">배송 주소 *</label>
+          <input id="coAddr" autocomplete="street-address">
+          <p class="err">배송 받을 주소를 입력해주세요.</p>
+        </div>
+        <div class="field">
+          <label for="coMemo">배송 메모</label>
+          <input id="coMemo" placeholder="예) 부재 시 문 앞에 놓아주세요">
+        </div>
+        <h4 class="co-sec">결제 수단</h4>
+        <div class="pay-opts">
+          <label><input type="radio" name="pay" value="신용카드" checked><span>신용카드</span></label>
+          <label><input type="radio" name="pay" value="무통장입금"><span>무통장입금</span></label>
+          <label><input type="radio" name="pay" value="간편결제"><span>간편결제</span></label>
+        </div>
+        <h4 class="co-sec">쿠폰</h4>
+        <div class="coupon">
+          <input id="couponInput" placeholder="쿠폰 코드 입력 (예: RAWNESS10)">
+          <button type="button" id="couponBtn">적용</button>
+        </div>
+        <p class="coupon-msg" id="couponMsg"></p>
+      </div>
+      <div class="co-side">
+        <h4 class="co-sec">주문 요약</h4>
+        <div id="coSummary"></div>
+        <button class="checkout co-pay" id="placeOrder">결제하기</button>
+        <button class="cp-continue co-back" data-backcart>장바구니로 돌아가기</button>
+        <p class="free-note">데모 페이지로 실제 결제는 이루어지지 않습니다.</p>
+      </div>
+    </div>`;
+  renderCoSummary();
+  checkoutEl.hidden = false;
+  window.scrollTo({top:0, behavior:'smooth'});
+  document.title = 'RAWNESS - CHECKOUT';
+}
+
+function applyCoupon(){
+  const msg = document.getElementById('couponMsg');
+  const code = document.getElementById('couponInput').value.trim().toUpperCase();
+  if (!code) { coupon = null; msg.textContent = ''; renderCoSummary(); return; }
+  if (COUPONS[code]) {
+    coupon = {code, rate: COUPONS[code]};
+    msg.textContent = `쿠폰이 적용되었습니다. (${Math.round(COUPONS[code] * 100)}% 할인)`;
+    msg.className = 'coupon-msg ok';
+  } else {
+    coupon = null;
+    msg.textContent = '유효하지 않은 쿠폰 코드입니다.';
+    msg.className = 'coupon-msg no';
+  }
+  renderCoSummary();
+}
+
+function placeOrder(){
+  const name = document.getElementById('coName').value.trim();
+  const phone = document.getElementById('coPhone').value.trim();
+  const addr = document.getElementById('coAddr').value.trim();
+  const digits = phone.replace(/\D/g, '');
+  const checks = {
+    name: !!name,
+    phone: digits.length >= 10 && digits.length <= 11 && digits.startsWith('01'),
+    addr: !!addr
+  };
+  let firstBad = null;
+  ['name','phone','addr'].forEach(f => {
+    const el = checkoutEl.querySelector(`.field[data-f="${f}"]`);
+    el.classList.toggle('error', !checks[f]);
+    if (!checks[f] && !firstBad) firstBad = el;
+  });
+  if (firstBad) { firstBad.querySelector('input').focus(); return; }
+
+  const a = coAmounts();
+  const d = new Date();
+  const ymd = d.getFullYear() + String(d.getMonth() + 1).padStart(2, '0') + String(d.getDate()).padStart(2, '0');
+  const order = {
+    no: `RW-${ymd}-${String(Math.floor(Math.random() * 10000)).padStart(4, '0')}`,
+    date: d.toISOString(), name, phone, addr,
+    memo: document.getElementById('coMemo').value.trim(),
+    pay: (checkoutEl.querySelector('input[name="pay"]:checked') || {value:'신용카드'}).value,
+    items: CART.map(c => { const it = itemOf(c.cat, c.idx);
+      return {n: it.n, color: c.color, size: c.size, qty: c.qty, p: it.p}; }),
+    sum: a.sum, discount: a.discount, coupon: coupon ? coupon.code : '',
+    ship: a.ship, total: a.total
+  };
+  ORDERS.unshift(order);
+  store.set('rawness_orders', ORDERS);
+  CART = [];
+  saveCart();
+  renderOrderDone(order);
+}
+
+function renderOrderDone(o){
+  checkoutEl.innerHTML = `
+    <div class="done">
+      <p class="cp-label">THANK YOU</p>
+      <h1 class="wordmark">ORDER COMPLETE</h1>
+      <p class="done-msg">주문이 정상적으로 완료되었습니다.<br>주문 내역은 상단의 '주문조회'에서 언제든 확인하실 수 있습니다.</p>
+      <div class="done-box">
+        <div class="row"><span>주문번호</span><span class="en no">${o.no}</span></div>
+        <div class="row"><span>받는 분</span><span>${esc(o.name)}</span></div>
+        <div class="row"><span>배송지</span><span>${esc(o.addr)}</span></div>
+        <div class="row"><span>결제수단</span><span>${o.pay}</span></div>
+        <div class="row total"><span>결제금액</span><span class="en">${won(o.total)}</span></div>
+      </div>
+      <div class="done-actions">
+        <button class="cp-continue" data-orders>주문조회</button>
+        <button class="checkout" data-continue>Continue Shopping</button>
+      </div>
+    </div>`;
+  window.scrollTo({top:0, behavior:'smooth'});
+  document.title = 'RAWNESS - ORDER COMPLETE';
+}
+
+checkoutEl.addEventListener('click', (e) => {
+  if (e.target.closest('[data-backcart]')) { showCartPage(); return; }
+  if (e.target.id === 'couponBtn') { applyCoupon(); return; }
+  if (e.target.id === 'placeOrder') { placeOrder(); return; }
+  if (e.target.closest('[data-orders]')) { showOrders(); return; }
+  if (e.target.closest('[data-continue]')) { render(curKey, false); window.scrollTo({top:0, behavior:'smooth'}); }
+});
+
+/* ===== 주문조회 ===== */
+function showOrders(){
+  closeLayers();
+  listingEls.forEach(el => el.hidden = true);
+  hideAllPages();
+  ordersEl.innerHTML = `
+    <p class="cp-label">MY ORDERS</p>
+    <h1 class="wordmark">ORDERS</h1>
+    ${ORDERS.length ? `<div class="order-list">${ORDERS.map(o => `
+      <div class="order-card">
+        <div class="order-head">
+          <div><span class="order-no">${o.no}</span><span class="order-date">${new Date(o.date).toLocaleDateString('ko-KR')}</span></div>
+          <span class="order-status">결제완료</span>
+        </div>
+        ${o.items.map(it => `<div class="order-line">
+          <span>${esc(it.n)}<em>${[it.color, it.size].filter(Boolean).join(' / ')} × ${it.qty}</em></span>
+          <span class="en">${won(it.p * it.qty)}</span>
+        </div>`).join('')}
+        <div class="order-foot">
+          <span>${o.pay}${o.discount ? ' · 쿠폰 ' + esc(o.coupon) : ''} · 배송비 ${o.ship ? won(o.ship) : '무료'}</span>
+          <span class="total">${won(o.total)}</span>
+        </div>
+      </div>`).join('')}</div>`
+    : `<div class="cp-empty">주문 내역이 없습니다.<br><button class="cp-continue" data-continue>Continue Shopping</button></div>`}`;
+  ordersEl.hidden = false;
+  window.scrollTo({top:0, behavior:'smooth'});
+  document.title = 'RAWNESS - ORDERS';
+}
+
+ordersEl.addEventListener('click', (e) => {
+  if (e.target.closest('[data-continue]')) { render(curKey, false); window.scrollTo({top:0, behavior:'smooth'}); }
+});
+
+/* 상단/푸터의 '주문조회' 링크 연결 */
+document.querySelectorAll('a').forEach(a => {
+  if (a.textContent.trim() === '주문조회') {
+    a.addEventListener('click', (e) => { e.preventDefault(); showOrders(); });
   }
 });
 
